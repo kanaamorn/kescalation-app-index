@@ -1,4 +1,5 @@
 <template>
+  
   <div id="main" class="w-[350px] min-[350px]:w-auto min-[350px]:max-w-screen-lg min-h-screen m-auto overflow-x-auto font-light"
     style="font-family: 'Sarabun', sans-serif;">
     <div class="font-serif text-3xl  min-[510px]:text-4xl  text-center text-[#1d1d1d] dark:text-blue-400 font-light">KESCALATION<span
@@ -322,7 +323,19 @@ useHead({
       src: 'https://cdn.sheetjs.com/xlsx-0.20.0/package/dist/xlsx.full.min.js',
       // valid options are: 'head' | 'bodyClose' | 'bodyOpen'
       tagPosition: 'bodyClose'
-    }
+    },
+    { children: `window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+      
+        gtag('config', 'G-11939FEBCM');`,
+        tagPosition: 'head' },
+    {
+      src: 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9528806984963822',
+      async: true,
+      crossorigin: "anonymous",
+      tagPosition: 'head'
+    }    
   ]
 })
 const source = ref("Hello");
