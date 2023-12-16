@@ -301,7 +301,14 @@
 
 <script setup>
 useHead({
+  htmlAttrs: 'th-TH',
+  meta: [{ 'http-equiv': 'X-UA-Compatible', content: 'ie=edge' }],
   link: [
+    {
+      rel: 'icon',
+      type: "image/png",
+      href: "/favicon.png"
+    },
     {
       rel: 'preconnect',
       href: 'https://fonts.googleapis.com'
