@@ -12,7 +12,7 @@
           title="คำนวนใหม่" @click="refresh">
           <Icon name="ep:refresh" /> Refresh
         </button>
-        <div  class="pt-2 pb-3 text-3xl font-normal text-center text-blue-600">คำนวนค่า K.</div>
+        <div  class="pt-2 pb-3 text-3xl font-normal text-center text-blue-600">คำนวนค่า K</div>
         <br>
         <div v-if="recal" class="flex flex-wrap  min-[510px]:flex-nowrap " >
           <div class="basis-[100%] min-[510px]:basis-[130px] p-[6px] text-blue-600 text-lg">วันเสนอราคา</div>
