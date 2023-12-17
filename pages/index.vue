@@ -301,7 +301,7 @@
 
 <script setup>
 useHead({
-  htmlAttrs: 'th-TH',
+  htmlAttrs: {lang: 'th-TH'},
   meta: [{ 'http-equiv': 'X-UA-Compatible', content: 'ie=edge' }],
   link: [
     {
