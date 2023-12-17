@@ -337,12 +337,12 @@ useHead({
       
         gtag('config', 'G-11939FEBCM');`,
         tagPosition: 'head' },
-    {
-      src: 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9528806984963822',
-      async: true,
-      crossorigin: "anonymous",
-      tagPosition: 'head'
-    }    
+    // {
+    //   src: 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9528806984963822',
+    //   async: true,
+    //   crossorigin: "anonymous",
+    //   tagPosition: 'head'
+    // }    
   ]
 })
 const source = ref("Hello");
