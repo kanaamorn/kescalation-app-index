@@ -1,9 +1,5 @@
 <template>
-  
-  <div id="main" class="w-[350px] min-[350px]:w-auto min-[350px]:max-w-screen-lg min-h-screen m-auto overflow-x-auto font-light"
-    style="font-family: 'Sarabun', sans-serif;">
-    <div class="font-serif text-3xl  min-[510px]:text-4xl  text-center text-[#1d1d1d] dark:text-blue-400 font-light">KESCALATION<span
-        class="text-[#00a300]">.COM</span></div>
+  <div >
     <br><br>
     <UCard :ui="{ base: '', ring: 'ring-blue-200 dark:ring-blue-800', height: 'h-auto' }" class="relative mx-2">
       <div v-if="true" class="">

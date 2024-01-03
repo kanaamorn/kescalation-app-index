@@ -1,5 +1,7 @@
 export default defineAppConfig({
-    ui: {
-      
+  ui: {
+    icons: {
+      dynamic: true
     }
-  })
+  }
+})
