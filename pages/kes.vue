@@ -18,73 +18,75 @@
         </div>
       </div>
       <div class="mt-2 p-[6px] text-blue-600 text-lg">ส่งงวดงาน</div>
-      <div v-if="true" v-for="(v, i) in timePay" :key="v.id">
-        <div class="flex flex-row mt-2 ml-4">
-          <div class="p-[6px] basis-[114px] text-blue-600">
-            งวดที่ {{ i + 1 }} วันที่
-          </div>
-          <div>
-            <Datepicker class="text-blue-600" @selected-date="selectDate" :time-range-a="timeRangeA"
-              :time-range-z="timeRangeZ" :time-summit="timeSummit" :time-finish="timeFinish" :time-pay="timePay"
-              name="วันส่งมอบงาน" :pay-index="i" />
-          </div>
-          <div v-if="timePay.length > 1" class="ml-1">
-            <div
-              class="p-[6px] border rounded border-red-500 text-red-500 hover:bg-red-500 hover:text-white hover:cursor-pointer"
-              @click="removePay(i)" title="ลบงวดนี้">
-              <button class="">
-                <Icon name="heroicons:minus" /> ลบงวดงาน
-              </button>
+      <div v-if="true">
+        <div  v-for="(v, i) in timePay" :key="v.id">
+          <div class="flex flex-row mt-2 ml-4">
+            <div class="p-[6px] basis-[114px] text-blue-600">
+              งวดที่ {{ i + 1 }} วันที่
+            </div>
+            <div>
+              <Datepicker class="text-blue-600" @selected-date="selectDate" :time-range-a="timeRangeA"
+                :time-range-z="timeRangeZ" :time-summit="timeSummit" :time-finish="timeFinish" :time-pay="timePay"
+                name="วันส่งมอบงาน" :pay-index="i" />
+            </div>
+            <div v-if="timePay.length > 1" class="ml-1">
+              <div
+                class="p-[6px] border rounded border-red-500 text-red-500 hover:bg-red-500 hover:text-white hover:cursor-pointer"
+                @click="removePay(i)" title="ลบงวดนี้">
+                <button class="">
+                  <Icon name="heroicons:minus" /> ลบงวดงาน
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="">
-          <div class="flex flex-row mt-8 mb-2 ml-8 text-green-600">
-            <div class="p-[6px] shrink-0 w-[30px]"></div>
-            <div class="p-[6px] shrink-0 w-[320px] text-center">สูตรค่า K</div>
-            <div class="p-[6px] shrink-0 w-[170px] text-center">จำนวนเงิน</div>
-            <div class="p-[6px] shrink-0 w-[100px] text-center">ผลคำนวน</div>
-            <div class="p-[6px] shrink-0 w-[170px] text-center">เงินชดเชย</div>
-            <div
-              class="p-[6px] shrink-0 inline-block border rounded border-green-600 text-green-600 hover:bg-green-600 hover:text-white hover:cursor-pointer"
-              @click="addKItem(i)">
-              <button class="">
-                <Icon name="heroicons:plus" /> เพิ่มรายการ
-              </button>
+          <div class="">
+            <div class="flex flex-row mt-8 mb-2 ml-8 text-green-600">
+              <div class="p-[6px] shrink-0 w-[30px]"></div>
+              <div class="p-[6px] shrink-0 w-[320px] text-center">สูตรค่า K</div>
+              <div class="p-[6px] shrink-0 w-[170px] text-center">จำนวนเงิน</div>
+              <div class="p-[6px] shrink-0 w-[100px] text-center">ผลคำนวน</div>
+              <div class="p-[6px] shrink-0 w-[170px] text-center">เงินชดเชย</div>
+              <div
+                class="p-[6px] shrink-0 inline-block border rounded border-green-600 text-green-600 hover:bg-green-600 hover:text-white hover:cursor-pointer"
+                @click="addKItem(i)">
+                <button class="">
+                  <Icon name="heroicons:plus" /> เพิ่มรายการ
+                </button>
+              </div>
             </div>
-          </div>
-          <div v-for="(k, ki) in v.kValue" :key="k.id">
-            <!--table kvalue-->
-            <div class="flex flex-row mt-0 ml-8 text-green-600">
-              <div class="p-[6px] shrink-0 basis-[30px]">{{ ki + 1 }}</div>
-              <div>
-                <Kselect :pay-index="i" :k-index="ki" @select-k-value="selectKValue" />
-              </div>
-              <div>
-                <InputCur :pay-index="i" :k-index="ki" @money-input="moneyInput" />
-              </div>
-              <div>
-                <Kresult p-h="ผลคำนวน" :v-l="k.kRe" />
-              </div>
-              <div class="">
-                <Kresult p-h="เงินชดเชย" style="width: 170px" :v-l="k.mRe" />
-              </div>
-              <div v-if="timePay[i].kValue.length > 1" class="ml-1 basis-[60px] shrink-0">
-                <div
-                  class="p-[6px] border rounded border-red-500 text-red-500 hover:bg-red-500 hover:text-white hover:cursor-pointer"
-                  @click="removeKItem(i, ki)" title="ลบรายการนี้">
-                  <button class="">
-                    <Icon name="heroicons:minus" /> ลบ
-                  </button>
+            <div v-for="(k, ki) in v.kValue" :key="k.id">
+              <!--table kvalue-->
+              <div class="flex flex-row mt-0 ml-8 text-green-600">
+                <div class="p-[6px] shrink-0 basis-[30px]">{{ ki + 1 }}</div>
+                <div>
+                  <Kselect :pay-index="i" :k-index="ki" @select-k-value="selectKValue" />
+                </div>
+                <div>
+                  <InputCur :pay-index="i" :k-index="ki" @money-input="moneyInput" />
+                </div>
+                <div>
+                  <Kresult p-h="ผลคำนวน" :v-l="k.kRe" />
+                </div>
+                <div class="">
+                  <Kresult p-h="เงินชดเชย" style="width: 170px" :v-l="k.mRe" />
+                </div>
+                <div v-if="timePay[i].kValue.length > 1" class="ml-1 basis-[60px] shrink-0">
+                  <div
+                    class="p-[6px] border rounded border-red-500 text-red-500 hover:bg-red-500 hover:text-white hover:cursor-pointer"
+                    @click="removeKItem(i, ki)" title="ลบรายการนี้">
+                    <button class="">
+                      <Icon name="heroicons:minus" /> ลบ
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
+            <!--end of  v-for kValue-->
+            &nbsp;
           </div>
-          <!--end of  v-for kValue-->
-          &nbsp;
+          <!--end of table kvalue -->
+          <br />
         </div>
-        <!--end of table kvalue -->
-        <br />
       </div>
       <!--end of v-for timePay-->
       <div class="">

@@ -2,137 +2,136 @@
   <div >
     <br><br>
     <UCard :ui="{ base: '', ring: 'ring-blue-200 dark:ring-blue-800', height: 'h-auto' }" class="relative mx-2">
-      <div v-if="true" class="">
+      <div class="absolute top-0 right-0">
         <button
-          class="absolute top-4 right-4 max-[400px]:top-1 max-[400px]:right-1 text-sm p-[2px] border rounded border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white hover:cursor-pointer"
+          class="p-1 text-sm text-blue-600 border border-blue-600 rounded hover:bg-blue-600 hover:text-white hover:cursor-pointer"
           title="คำนวนใหม่" @click="refresh">
           <Icon name="ep:refresh" /> Refresh
         </button>
-        <div  class="pt-2 pb-3 text-3xl font-normal text-center text-blue-600">คำนวนค่า K</div>
-        <br>
-        <div v-if="recal" class="flex flex-wrap  min-[510px]:flex-nowrap " >
-          <div class="basis-[100%] min-[510px]:basis-[130px] p-[6px] text-blue-600 text-lg">วันเสนอราคา</div>
-          <div class="min-h-[48px] w-[320px] shrink">
-            <Datepicker @selected-date="selectDate" :time-range-a="timeRangeA" :time-range-z="timeRangeZ"
-              :time-summit="timeSummit" :time-finish="timeFinish" :time-pay="timePay" :time-mark="timeMark" name="วันเสนอราคา" />
-          </div>
+      </div>
+      <!-- <h1  class="pt-2 pb-3 text-3xl font-normal text-center text-blue-600">คำนวนค่าK</h1> -->
+      <div v-if="recal" class="flex flex-wrap  min-[510px]:flex-nowrap mt-5" >
+        <div class="basis-[100%] min-[510px]:basis-[130px] p-[6px] text-blue-600 text-lg">วันเสนอราคา</div>
+        <div class="min-h-[48px] w-[320px] shrink">
+          <Datepicker @selected-date="selectDate" :time-range-a="timeRangeA" :time-range-z="timeRangeZ"
+            :time-summit="timeSummit" :time-finish="timeFinish" :time-pay="timePay" name="วันเสนอราคา" />
         </div>
-        <div v-if="timeSummit" class="flex flex-wrap  min-[510px]:flex-nowrap mt-2">
-          <div class="basis-[100%] min-[510px]:basis-[130px] p-[6px] text-blue-600 text-lg">
-            วันสิ้นสุดสัญญา
-          </div>
-          <div class="min-h-[48px] w-[320px] shrink">
-            <Datepicker @selected-date="selectDate" :time-range-a="timeRangeA" :time-range-z="timeRangeZ"
-              :time-summit="timeSummit" :time-finish="timeFinish" :time-pay="timePay" name="วันสิ้นสุดสัญญา" />
-          </div>
+      </div>
+      <div v-if="timeSummit" class="flex flex-wrap  min-[510px]:flex-nowrap mt-2">
+        <div class="basis-[100%] min-[510px]:basis-[130px] p-[6px] text-blue-600 text-lg">
+          วันสิ้นสุดสัญญา
         </div>
-        <div id="timePay" v-if="timeFinish">
-          <div class="mt-2 p-[6px] text-blue-600 text-lg">ส่งงวดงาน</div>
-          <UCard :ui="{ base: '', ring: 'ring-blue-100 dark:ring-blue-700', height: 'h-auto' }" class="">
-            <div v-for="(v, i) in timePay" :key="v.id">
-              <div class="flex flex-wrap  min-[510px]:flex-nowrap">
-                <div class="p-[6px] basis-[100%] min-[510px]:basis-[130px] text-blue-600">
-                  งวดที่ {{ i + 1 }} วันที่
-                </div>
-                <div>
-                  <Datepicker class="text-blue-600" @selected-date="selectDate" :time-range-a="timeRangeA"
-                    :time-range-z="timeRangeZ" :time-summit="timeSummit" :time-finish="timeFinish" :time-pay="timePay"
-                    name="วันส่งมอบงาน" :pay-index="i" />
-                </div>
-                <div v-if="timePay.length > 1" class="ml-1">
-                  <div
-                    class="p-[6px] border rounded border-red-500 text-red-500 hover:bg-red-500 hover:text-white hover:cursor-pointer"
-                    @click="removePay(i)" title="ลบงวดนี้">
-                    <button class="">
-                      <Icon name="heroicons:minus" /> ลบงวดงาน
-                    </button>
-                  </div>
+        <div class="min-h-[48px] w-[320px] shrink">
+          <Datepicker @selected-date="selectDate" :time-range-a="timeRangeA" :time-range-z="timeRangeZ"
+            :time-summit="timeSummit" :time-finish="timeFinish" :time-pay="timePay" name="วันสิ้นสุดสัญญา" />
+        </div>
+      </div>
+      <div id="timePay" v-if="timeFinish">
+        <div class="mt-2 p-[6px] text-blue-600 text-lg">ส่งงวดงาน</div>
+        <UCard :ui="{ base: '', ring: 'ring-blue-100 dark:ring-blue-700', height: 'h-auto' }" class="">
+          <div v-for="(v, i) in timePay" :key="v.id">
+            <div class="flex flex-wrap  min-[510px]:flex-nowrap">
+              <div class="p-[6px] basis-[100%] min-[510px]:basis-[130px] text-blue-600">
+                งวดที่ {{ i + 1 }} วันที่
+              </div>
+              <div>
+                <Datepicker class="text-blue-600" @selected-date="selectDate" :time-range-a="timeRangeA"
+                  :time-range-z="timeRangeZ" :time-summit="timeSummit" :time-finish="timeFinish" :time-pay="timePay"
+                  name="วันส่งมอบงาน" :pay-index="i" />
+              </div>
+              <div v-if="timePay.length > 1" class="ml-1">
+                <div
+                  class="p-[6px] border rounded border-red-500 text-red-500 hover:bg-red-500 hover:text-white hover:cursor-pointer"
+                  @click="removePay(i)" title="ลบงวดนี้">
+                  <button class="">
+                    <Icon name="heroicons:minus" /> ลบงวดงาน
+                  </button>
                 </div>
               </div>
-              <br>
-              <br>
-              <br class="min-[510px]:hidden">
-              <div v-if="timePay[0].time" class="">
-                <!-- <div class="flex flex-row mt-8 mb-2 ml-8 text-green-600">
-                  <div class="p-[6px] shrink-0 w-[30px]"></div>
-                  <div class="p-[6px] shrink-0 w-[320px] text-center">สูตรค่า K</div>
-                  <div class="p-[6px] shrink-0 w-[170px] text-center">จำนวนเงิน</div>
-                  <div class="p-[6px] shrink-0 w-[100px] text-center">ผลคำนวน</div>
-                  <div class="p-[6px] shrink-0 w-[170px] text-center">เงินชดเชย</div>
-                  <div v-if="user"
-                    class="p-[6px] shrink-0 inline-block border rounded border-green-600 text-green-600 hover:bg-green-600 hover:text-white hover:cursor-pointer"
-                    @click="addKItem(i)">
-                    <button class="">
-                      <Icon name="heroicons:plus" /> เพิ่มรายการ
-                    </button>
-                  </div>
-                </div> -->
-                <div v-for="(k, ki) in v.kValue" :key="k.id">
-                  <!--table kvalue-->
-                  <UCard :ui="{ base: '', ring: 'ring-green-200 dark:ring-green-800' }"
-                    class="w-full min-[580px]:w-[530px] m-auto">
-                    <div class="text-green-600">
-                      <div class="p-[6px] text-center mb-3">รายการที่{{ ki + 1 }}</div>
-                      <div class="h-[40px] flex mb-2">
-                        <div class="basis-[120px] truncate p-[6px]">สูตรค่า K</div>
-                        <div class="basis-[340px] shrink" title="สูตรค่า K">
-                          <Kselect :pay-index="i" :k-index="ki" @select-k-value="selectKValue" />
-                        </div>
-                      </div>
-                      <div class="h-[40px] flex mb-2">
-                        <div class="shrink truncate basis-[120px] p-[6px]">จำนวนเงิน ส่ง</div>
-                        <div class="" title="จำนวนเงิน ส่ง">
-                          <InputCur :pay-index="i" :k-index="ki" @money-input="moneyInput" />
-                        </div>
-                      </div>
-                      <div
-                        class="h-[40px] flex mb-2">
-                        <div class="shrink truncate basis-[120px] p-[6px] ">ผลคำนวนค่า K</div>
-                        <div class="" title="ผลคำนวนค่า K">
-                          <Kresult p-h="ผลคำนวน" style="width: 155px" :v-l="k.kRe" />
-                        </div>
-                      </div>
-                      <div class="h-[40px] flex">
-                        <div class="shrink truncate basis-[120px] p-[6px] ">เงินชดเชย</div>
-                        <div class="" title="เงินชดเชย">
-                          <Kresult p-h="เงินชดเชย"  style="width: 155px" :v-l="k.mRe" />
-                        </div>
-                      </div>
-                      <div v-if="timePay[i].kValue.length > 1" class="ml-1 basis-[60px] shrink-0">
-                        <div
-                          class="p-[6px] border rounded border-red-500 text-red-500 hover:bg-red-500 hover:text-white hover:cursor-pointer"
-                          @click="removeKItem(i, ki)" title="ลบรายการนี้">
-                          <button class="">
-                            <Icon name="heroicons:minus" /> ลบ
-                          </button>
-                        </div>
+            </div>
+            <br>
+            <br>
+            <br class="min-[510px]:hidden">
+            <div v-if="timePay[0].time" class="">
+              <!-- <div class="flex flex-row mt-8 mb-2 ml-8 text-green-600">
+                <div class="p-[6px] shrink-0 w-[30px]"></div>
+                <div class="p-[6px] shrink-0 w-[320px] text-center">สูตรค่า K</div>
+                <div class="p-[6px] shrink-0 w-[170px] text-center">จำนวนเงิน</div>
+                <div class="p-[6px] shrink-0 w-[100px] text-center">ผลคำนวน</div>
+                <div class="p-[6px] shrink-0 w-[170px] text-center">เงินชดเชย</div>
+                <div v-if="user"
+                  class="p-[6px] shrink-0 inline-block border rounded border-green-600 text-green-600 hover:bg-green-600 hover:text-white hover:cursor-pointer"
+                  @click="addKItem(i)">
+                  <button class="">
+                    <Icon name="heroicons:plus" /> เพิ่มรายการ
+                  </button>
+                </div>
+              </div> -->
+              <div v-for="(k, ki) in v.kValue" :key="k.id">
+                <!--table kvalue-->
+                <UCard :ui="{ base: '', ring: 'ring-green-200 dark:ring-green-800' }"
+                  class="w-full min-[580px]:w-[530px] m-auto">
+                  <div class="text-green-600">
+                    <div class="p-[6px] text-center mb-3">รายการที่{{ ki + 1 }}</div>
+                    <div class="h-[40px] flex mb-2">
+                      <div class="basis-[120px] truncate p-[6px]">สูตรค่า K</div>
+                      <div class="basis-[340px] shrink" title="สูตรค่า K">
+                        <Kselect :pay-index="i" :k-index="ki" @select-k-value="selectKValue" />
                       </div>
                     </div>
-                  </UCard>
-                </div>
-                <!--end of  v-for kValue-->
-                <!-- <br />
-                <div class="flex flex-row mt-0 ml-8 text-green-600">
-                  <div class=" w-[130px] text-right">ผลรวม เงินชดเชย&nbsp;&nbsp;&nbsp;</div>
-                  <div class=" w-[170px] text-right"><span class="border-b-4 border-green-600 border-double">{{
-                    moneyReturn }}</span></div>
-                </div> -->
+                    <div class="h-[40px] flex mb-2">
+                      <div class="shrink truncate basis-[120px] p-[6px]">จำนวนเงิน ส่ง</div>
+                      <div class="" title="จำนวนเงิน ส่ง">
+                        <InputCur :pay-index="i" :k-index="ki" @money-input="moneyInput" />
+                      </div>
+                    </div>
+                    <div
+                      class="h-[40px] flex mb-2">
+                      <div class="shrink truncate basis-[120px] p-[6px] ">ผลคำนวนค่า K</div>
+                      <div class="" title="ผลคำนวนค่า K">
+                        <Kresult p-h="ผลคำนวน" style="width: 155px" :v-l="k.kRe" />
+                      </div>
+                    </div>
+                    <div class="h-[40px] flex">
+                      <div class="shrink truncate basis-[120px] p-[6px] ">เงินชดเชย</div>
+                      <div class="" title="เงินชดเชย">
+                        <Kresult p-h="เงินชดเชย"  style="width: 155px" :v-l="k.mRe" />
+                      </div>
+                    </div>
+                    <div v-if="timePay[i].kValue.length > 1" class="ml-1 basis-[60px] shrink-0">
+                      <div
+                        class="p-[6px] border rounded border-red-500 text-red-500 hover:bg-red-500 hover:text-white hover:cursor-pointer"
+                        @click="removeKItem(i, ki)" title="ลบรายการนี้">
+                        <button class="">
+                          <Icon name="heroicons:minus" /> ลบ
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </UCard>
               </div>
-              <!--end of table kvalue -->
+              <!--end of  v-for kValue-->
+              <!-- <br />
+              <div class="flex flex-row mt-0 ml-8 text-green-600">
+                <div class=" w-[130px] text-right">ผลรวม เงินชดเชย&nbsp;&nbsp;&nbsp;</div>
+                <div class=" w-[170px] text-right"><span class="border-b-4 border-green-600 border-double">{{
+                  moneyReturn }}</span></div>
+              </div> -->
             </div>
-          </UCard>
-        </div>
-        <!--end of v-for timePay-->
-        <div class="">
-        </div>
-        <br />
-        <div v-if="user"
-          class="p-[6px] inline-block mt-5 border rounded border-blue-600 text-blue-600 hover:bg-green-600 hover:text-white hover:cursor-pointer"
-          @click="addPay()">
-          <button class="">
-            <Icon name="heroicons:plus" /> เพิ่มงวดงาน
-          </button>
-        </div>
+            <!--end of table kvalue -->
+          </div>
+        </UCard>
+      </div>
+      <!--end of v-for timePay-->
+      <div class="">
+      </div>
+      <br />
+      <div v-if="user"
+        class="p-[6px] inline-block mt-5 border rounded border-blue-600 text-blue-600 hover:bg-green-600 hover:text-white hover:cursor-pointer"
+        @click="addPay()">
+        <button class="">
+          <Icon name="heroicons:plus" /> เพิ่มงวดงาน
+        </button>
       </div>
     </UCard>
     <br>
@@ -610,7 +609,7 @@ var kName = {
 var recal = ref(true);
 var user = ref(null);
 var kValue = ref(null);
-var timeRangeA = ref(new Date(2007, 0, 1));
+var timeRangeA = ref(new Date(2007, 0, 1).getTime());
 var timeRangeZ = ref(Date.now() - 86400000 * 50);
 var timeSummit = ref(null);
 var timeFinish = ref(null);
