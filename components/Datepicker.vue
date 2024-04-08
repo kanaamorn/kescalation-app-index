@@ -37,8 +37,8 @@
                     <th>ศ</th>
                     <th>ส</th>
                 </tr>
-                <tr v-for="m in 6">
-                    <td v-for="n in 7 " :class="cd[(m - 1) * 7 + (n - 1)].classObj"
+                <tr v-for="m in 6" :key="m">
+                    <td v-for="n in 7 " :key="n" :class="cd[(m - 1) * 7 + (n - 1)].classObj"
                         @click="selectDate(cd[(m - 1) * 7 + (n - 1)].time)">
                         <div class="inline-block text-center rounded-full">
                             <span>{{ cd[(m - 1) * 7 + (n - 1)].date }}</span>
