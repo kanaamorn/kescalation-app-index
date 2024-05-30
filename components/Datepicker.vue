@@ -1,5 +1,5 @@
 <template>
-    <div ref="target" class="relative w-[280px] text-blue-600">
+    <div ref="target" class="relative w-[280px] text-blue-600 ">
         <div @click="openCalendar" class="absolute flex flex-row w-full">
             <input type="text" class=" input-field placeholder:text-blue-300" :value="thaiMark" :placeholder="name" />
             <button type="submit" class="icon-d min-w-[38px]">
@@ -60,11 +60,11 @@ var props = defineProps({
     },
     timeRangeA: {
         type: Number,
-        default: (new Date(2007,0,1)).getTime(),
+        default: 1167584400000,
     },
     timeRangeZ: {
         type: Number,
-        default: Date.now() - (86400000 * 50),
+        default: Date.now(),
     },
     timeSummit: {
         type: Number,

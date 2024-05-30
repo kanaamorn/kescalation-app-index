@@ -14,5 +14,8 @@ export default defineNuxtConfig({
       autoprefixer: {},
     },
   },
-  modules: ['@vueuse/nuxt','nuxt-icon','@nuxt/ui','@pinia/nuxt']
+  modules: ['@vueuse/nuxt','nuxt-icon','@nuxt/ui','@pinia/nuxt','@nuxtjs/supabase'],
+  supabase: {
+    redirect: false
+  }
 })

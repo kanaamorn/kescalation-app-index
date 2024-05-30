@@ -14,7 +14,7 @@
         <!-- <tr>
           <th class="text-sm" colspan="2">เลือกค่า K</th>       
         </tr> -->
-        <tr v-for="(m,k ) in kFom" class="text-xs text-left hover:cursor-pointer" :title="m[2]" @click="selectK(k,m[4],m[2])">
+        <tr v-for="(m,k ) in kFom" :key="k" class="text-xs text-left hover:cursor-pointer" :title="m[2]" @click="selectK(k,m[4],m[2])">
           <td class="w-[58px] px-[2px] py-1">{{ m[4] }}</td>
           <td class="block truncate max-w-[272px] py-1 pr-0 pl-[2px]">
             {{ m[2] }}

@@ -53,20 +53,6 @@
             <br>
             <br class="min-[510px]:hidden">
             <div v-if="timePay[0].time" class="">
-              <!-- <div class="flex flex-row mt-8 mb-2 ml-8 text-green-600">
-                <div class="p-[6px] shrink-0 w-[30px]"></div>
-                <div class="p-[6px] shrink-0 w-[320px] text-center">สูตรค่า K</div>
-                <div class="p-[6px] shrink-0 w-[170px] text-center">จำนวนเงิน</div>
-                <div class="p-[6px] shrink-0 w-[100px] text-center">ผลคำนวน</div>
-                <div class="p-[6px] shrink-0 w-[170px] text-center">เงินชดเชย</div>
-                <div v-if="user"
-                  class="p-[6px] shrink-0 inline-block border rounded border-green-600 text-green-600 hover:bg-green-600 hover:text-white hover:cursor-pointer"
-                  @click="addKItem(i)">
-                  <button class="">
-                    <Icon name="heroicons:plus" /> เพิ่มรายการ
-                  </button>
-                </div>
-              </div> -->
               <div v-for="(k, ki) in v.kValue" :key="k.id">
                 <!--table kvalue-->
                 <UCard :ui="{ base: '', ring: 'ring-green-200 dark:ring-green-800' }"
@@ -111,7 +97,7 @@
                 </UCard>
               </div>
               <!--end of  v-for kValue-->
-              <!-- <br />
+              <!-- <br>
               <div class="flex flex-row mt-0 ml-8 text-green-600">
                 <div class=" w-[130px] text-right">ผลรวม เงินชดเชย&nbsp;&nbsp;&nbsp;</div>
                 <div class=" w-[170px] text-right"><span class="border-b-4 border-green-600 border-double">{{
@@ -125,7 +111,7 @@
       <!--end of v-for timePay-->
       <div class="">
       </div>
-      <br />
+      <br>
       <div v-if="user"
         class="p-[6px] inline-block mt-5 border rounded border-blue-600 text-blue-600 hover:bg-green-600 hover:text-white hover:cursor-pointer"
         @click="addPay()">
@@ -147,7 +133,7 @@
         :class="{ 'bg-gray-800 text-white hover:bg-gray-800': !isCalTab }" @click="isCalTab = false">เอกสารคำนวน ค่า
         K</button>
     </div> -->
-    <br />
+    <br>
     <div v-if="timePay[0].kValue[0].kIndex" id="report" v-show="isCalTab">
       <div id="summary" v-if="kValue" class="relative hidden">
         <div class="py-3 text-xl text-center text-black">สรุป ผล</div>
@@ -244,7 +230,7 @@
             }}
           </div>
         </div>
-        <br />
+        <br>
       </div>
       <div v-if="timeSummit &&
           timeFinish &&
@@ -266,7 +252,7 @@
             (new Date(timeFinish).getFullYear() + 543).toString()
           }}
         </div>
-        <br />
+        <br>
       </div>
       <div v-for="(item, index) in timePay" :key="item.payday">
         <div v-if="timePay[index].time">
@@ -286,7 +272,7 @@
               (new Date(item.time).getFullYear() + 543).toString()
             }}
           </div>
-          <br />
+          <br>
         </div>
       </div>
     </div>
@@ -609,8 +595,9 @@ var kName = {
 var recal = ref(true);
 var user = ref(null);
 var kValue = ref(null);
-var timeRangeA = ref(new Date(2007, 0, 1).getTime());
-var timeRangeZ = ref(Date.now() - 86400000 * 50);
+var timeRangeA = ref(1167584400000);
+// console.log(new Date(2007, 0, 1).getTime());
+var timeRangeZ = ref(Date.now());
 var timeSummit = ref(null);
 var timeFinish = ref(null);
 var timePay = ref([
@@ -682,7 +669,7 @@ function loadDoc() {
   };
   xhttp.open(
     "GET",
-    "http://kescalation.old/app/php/getDataCreatJSON.php?t=" + Math.random()
+    "http://kescalation/app/php/getDataCreatJSON.php?t=" + Math.random()
   );
   xhttp.send();
 }
@@ -808,7 +795,7 @@ function calK(Do, Dt, K, is) {
       .toFixed(6)
       .slice(0, -3);
   }
-  sum = sum.toFixed(3);
+  sum = (+sum).toFixed(3);
   str += sum;
   txt.push(`\t\t${str}`);
 
