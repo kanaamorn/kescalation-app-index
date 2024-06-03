@@ -86,12 +86,12 @@ export default defineNuxtConfig({
           sizes: "512x512",
           type: "image/png",
         },
-        // {
-        //   src: "/images/icons/icon-512x512.png",
-        //   sizes: "512x512",
-        //   type: "image/png",
-        //   purpose: "any maskable",
-        // },
+        {
+          src: "/images/icons/icon-1024x1024.png",
+          sizes: "1024x1024",
+          type: "image/png",
+          purpose: "any maskable",
+        },
       ],
     },
     workbox: {
