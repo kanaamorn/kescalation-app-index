@@ -1,4 +1,5 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+const sw = false;
 export default defineNuxtConfig({
   app: {
     head: {
@@ -23,6 +24,9 @@ export default defineNuxtConfig({
     "@vite-pwa/nuxt",
   ],
   pwa: {
+    strategies: sw ? 'injectManifest' : 'generateSW',
+    srcDir: sw ? 'service-worker' : undefined,
+    filename: sw ? 'sw.ts' : undefined,
     registerType: "autoUpdate",
     manifest: {
       name: "K-escalation",

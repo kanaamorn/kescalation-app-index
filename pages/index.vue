@@ -303,7 +303,11 @@ useHead({
       rel: 'stylesheet',
       href: 'https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400&display=swap',
       crossorigin: ''
-    }
+    },
+    {
+      rel: 'apple-touch-icon',
+      href: '/images/icons/icon-192x192.png'
+    },
   ],
   script: [
     {
@@ -669,7 +673,7 @@ function loadDoc() {
   };
   xhttp.open(
     "GET",
-    "http://kescalation/app/php/getDataCreatJSON.php?t=" + Math.random()
+    "https://kescalation.com/app/php/getDataCreatJSON.php?t=" + Math.random()
   );
   xhttp.send();
 }
