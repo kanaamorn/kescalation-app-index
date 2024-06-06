@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@font-face {
+    font-family: 'Cooper Black Regular';
+    font-style: normal;
+    font-weight: normal;
+    src: url('/fonts/COOPBL.woff') format('woff');
+    font-display: swap;
+    }

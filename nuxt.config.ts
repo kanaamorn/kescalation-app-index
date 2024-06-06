@@ -20,7 +20,7 @@ export default defineNuxtConfig({
     "nuxt-icon",
     "@nuxt/ui",
     "@pinia/nuxt",
-    "@nuxtjs/supabase",
+    // "@nuxtjs/supabase",
     "@vite-pwa/nuxt",
   ],
   pwa: {
@@ -118,7 +118,7 @@ export default defineNuxtConfig({
       type: "module",
     },
   },
-  supabase: {
-    redirect: false,
-  },
+  // supabase: {
+  //   redirect: false,
+  // },
 });

@@ -60,10 +60,14 @@ var emit = defineEmits(['moneyInput']);
     emit('moneyInput',mon,props.payIndex,props.kIndex);
     console.log(mon);
   }
+  function testFun(ev) {
+
+  }
 </script>
 <template>
   <div  class="relative h-10 w-[150px]">
     <input  class="cal-input placeholder:text-green-300" type="text" value="" placeholder="จำนวนเงิน"  />
+    <!-- <input  class="cal-input cal-front" type="text" value=""  @input="testFun"/> -->
     <input  class="cal-input cal-front" type="text" value="" @keydown="inpFrontFun " oninput="this.value = ''"/>
   </div>
 </template>
