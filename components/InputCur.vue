@@ -60,9 +60,7 @@ var emit = defineEmits(['moneyInput']);
     emit('moneyInput',mon,props.payIndex,props.kIndex);
     console.log(mon);
   }
-  function testFun(ev) {
-
-  }
+  
 </script>
 <template>
   <div  class="relative h-10 w-[150px]">

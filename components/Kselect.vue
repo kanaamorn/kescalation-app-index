@@ -1,27 +1,27 @@
 <template>
   <div ref="target" class="relative w-full max-w-[360px]">
-    <div @click="openKselect" class="absolute flex flex-row w-full">
-      <input type="text" class="input-field placeholder:text-green-300" :value="kValue" :title="kDes"  placeholder="เลือกค่า K" />
-      <button type="submit" class="icon-d min-w-[38px]">
-        <Icon name="fe:arrow-down" />
+    <div @click="openKselect"
+      class="absolute flex flex-row w-full border border-green-200 rounded-md shadow-sm hover:shadow-md">
+      <input type="text" class="text-sm input-field placeholder:text-green-300" :value="kValue" :title="kDes"
+        placeholder="เลือกค่า K" />
+      <button type="submit" class="icon-d min-w-[38px] bg-green-200">
+        <Icon name="fe:arrow-down" class="text-green-400" />
       </button>
     </div>
-    <div
-      v-if="isOpenK"
-      class="absolute z-20 w-[340px] bg-white border border-green-200 rounded-md shadow-md top-11 right-0 max-[450px]:right-[-50px]"
-    >
-      <table class="block w-full overflow-x-hidden border-collapse">
-        <!-- <tr>
-          <th class="text-sm" colspan="2">เลือกค่า K</th>       
-        </tr> -->
-        <tr v-for="(m,k ) in kFom" :key="k" class="text-xs text-left hover:cursor-pointer" :title="m[2]" @click="selectK(k,m[4],m[2])">
-          <td class="w-[58px] px-[2px] py-1">{{ m[4] }}</td>
-          <td class="block truncate max-w-[272px] py-1 pr-0 pl-[2px]">
-            {{ m[2] }}
-          </td>
-        </tr>
-      </table>
-    </div>
+    <Transition name="slide">
+      <div v-if="isOpenK"
+        class="k-scroll absolute z-20 max-w-[360px] overflow-auto h-[450px] bg-white border border-green-200 rounded-md shadow-md top-11 right-0 left-0">
+        <table class="w-full border-collapse">
+          <tr v-for="(m, k ) in kFom" :key="k" class="text-xs text-left hover:cursor-pointer" :title="m[2]"
+            @click="selectK(k, m[4], m[2])">
+            <td class="w-[42px] px-[2px] py-1">{{ m[4] }}</td>
+            <td class="truncate py-1 px-[2px]">
+              {{ m[2] }}
+            </td>
+          </tr>
+        </table>
+      </div>
+    </Transition>
   </div>
 </template>
 
@@ -40,260 +40,15 @@ var props = defineProps({
 var kValue = ref(null);
 var kDes = ref(null);
 var emit = defineEmits(['selectKValue']);
-function selectK(k,m4,m2) {
-  kValue.value = m4 + m2;
+function selectK(k, m4, m2) {
+  kValue.value = m4 + " " + m2;
   kDes.value = m4 + m2;
   isOpenK.value = false;
-  emit('selectKValue',k,props.payIndex,props.kIndex)
+  emit('selectKValue', k, props.payIndex, props.kIndex)
 }
+import { k_fom } from '~/assets/js/kvar.js';
 
-var kFom = ref({
-    K1: [
-      ["0.25", "0.15", "0.10", "0.40", "0.10"],
-      ["I", "C", "M", "S"],
-      "งานอาคาร",
-      "K = 0.25 + 0.15 It/Io + 0.10 Ct/Co + 0.40 Mt/Mo + 0.10 St/So",
-      "K1    ",
-    ],
-    K2_1: [
-      ["0.30", "0.10", "0.40", "0.20"],
-      ["I", "E", "F"],
-      "งานดิน",
-      "K = 0.30 + 0.10 It/Io + 0.40 Et/Eo + 0.20 Ft/Fo",
-      "K2.1  ",
-    ],
-    K2_2: [
-      ["0.40", "0.20", "0.20", "0.20"],
-      ["I", "M", "F"],
-      "งานหินเรียง",
-      "K = 0.40 + 0.20 It/Io + 0.20 Mt/Mo + 0.20 Ft/Fo",
-      "K2.2  ",
-    ],
-    K2_3: [
-      ["0.45", "0.15", "0.10", "0.20", "0.10"],
-      ["I", "M", "E", "F"],
-      "งานเจาะระเบิดหิน",
-      "K = 0.45 + 0.15 It/Io + 0.10 Mt/Mo + 0.20 Et/Eo + 0.10 Ft/Fo",
-      "K2.3  ",
-    ],
-    K3_1: [
-      ["0.30", "0.40", "0.20", "0.10"],
-      ["A", "E", "F"],
-      "งานผิวทาง PRIME COAT, TACK COAT, SEAL COAT",
-      "K = 0.30 + 0.40 At/Ao + 0.20 Et/Eo + 0.10 Ft/Fo",
-      "K3.1  ",
-    ],
-    K3_2: [
-      ["0.30", "0.10", "0.30", "0.20", "0.10"],
-      ["M", "A", "E", "F"],
-      "งานผิวทาง SURFACE TREATMENT",
-      "K = 0.30 + 0.10 Mt/Mo + 0.30 At/Ao + 0.20 Et/Eo + 0.10 Ft/Fo",
-      "K3.2  ",
-    ],
-    K3_3: [
-      ["0.30", "0.10", "0.40", "0.10", "0.10"],
-      ["M", "A", "E", "F"],
-      "งานผิวทาง ASPHALTIC CONCRETE, PENETRATION MACADAM",
-      "K = 0.30 + 0.10 Mt/Mo + 0.40 At/Ao + 0.10 Et/Eo + 0.10 Ft/Fo",
-      "K3.3  ",
-    ],
-    K3_4: [
-      ["0.30", "0.10", "0.35", "0.10", "0.15"],
-      ["I", "C", "M", "S"],
-      "งานถนน คสล.",
-      "K = 0.30 + 0.10 It/Io + 0.35 Ct/Co + 0.10 Mt/Mo + 0.15 St/So",
-      "K3.4  ",
-    ],
-    K3_5: [
-      ["0.35", "0.20", "0.15", "0.15", "0.15"],
-      ["I", "C", "M", "S"],
-      "งานท่อระบายน้ำ คสล. และบ่อพัก",
-      "K = 0.35 + 0.20 It/Io + 0.15 Ct/Co + 0.15 Mt/Mo + 0.15 St/So",
-      "K3.5  ",
-    ],
-    K3_6: [
-      ["0.30", "0.10", "0.15", "0.20", "0.25"],
-      ["I", "C", "M", "S"],
-      "งานสะพาน เขื่อนกันตลิ่ง คสล.",
-      "K = 0.30 + 0.10 It/Io + 0.15 Ct/Co + 0.20 Mt/Mo + 0.25 St/So",
-      "K3.6  ",
-    ],
-    K3_7: [
-      ["0.25", "0.10", "0.05", "0.20", "0.40"],
-      ["I", "C", "M", "S"],
-      "งานโครงสร้างเหล็ก",
-      "K = 0.25 + 0.10 It/Io + 0.05 Ct/Co + 0.20 Mt/Mo + 0.40 St/So",
-      "K3.7  ",
-    ],
-    K4_1: [
-      ["0.40", "0.20", "0.10", "0.10", "0.20"],
-      ["I", "C", "M", "S"],
-      "งานอาคารชลประทานไม่รวมบานเหล็ก",
-      "K = 0.40 + 0.20 It/Io + 0.10 Ct/Co + 0.10 Mt/Mo + 0.20 St/So",
-      "K4.1  ",
-    ],
-    K4_2: [
-      ["0.35", "0.20", "0.10", "0.10", "0.25"],
-      ["I", "C", "M", "S"],
-      "งานอาคารชลประทานรวมบานเหล็ก",
-      "K = 0.35 + 0.20 It/Io + 0.10 Ct/Co + 0.10 Mt/Mo + 0.25 St/So",
-      "K4.2  ",
-    ],
-    K4_3: [
-      ["0.35", "0.20", "0.45"],
-      ["I", "G"],
-      "งานบานระบาย TRASMRACK และ STEEL LINER",
-      "K = 0.35 + 0.20 It/Io + 0.45 Gt/Go",
-      "K4.3  ",
-    ],
-    K4_4: [
-      ["0.25", "0.15", "0.60"],
-      ["I", "S"],
-      "งานเหล็กเสริมคอนกรีตและ ANCHOR BAR",
-      "K = 0.25 + 0.15 It/Io + 0.60 St/So",
-      "K4.4  ",
-    ],
-    K4_5: [
-      ["0.40", "0.15", "0.25", "0.20"],
-      ["I", "C", "M"],
-      "งานคอนกรีตไม่รวมเหล็กและคอนกรีตดาดคลอง",
-      "K = 0.40 + 0.15 It/Io + 0.25 Ct/Co + 0.20 Mt/Mo",
-      "K4.5  ",
-    ],
-    K4_6: [
-      ["0.40", "0.20", "0.10", "0.20", "0.10"],
-      ["I", "M", "E", "F"],
-      "งานเจาะ",
-      "K = 0.40 + 0.20 It/Io + 0.10 Mt/Mo + 0.20 Et/Eo + 0.10 Ft/Fo",
-      "K4.6  ",
-    ],
-    K4_7: [
-      ["0.00", "1.00"],
-      ["C"],
-      "งานอัดฉีดน้ำปูน",
-      "K = 0.00 + 1.00 Ct/Co",
-      "K4.7  ",
-    ],
-    K5_1_1: [
-      ["0.50", "0.25", "0.25"],
-      ["I", "M"],
-      "รับวางท่อ AC,PVC เฉพาะค่าแรง",
-      "K = 0.50 + 0.25 It/Io + 0.25 Mt/Mo",
-      "K5.1.1",
-    ],
-    K5_1_2: [
-      ["0.40", "0.10", "0.10", "0.40"],
-      ["I", "M", "AC"],
-      "จัดหาและรับวางท่อ AC",
-      "K = 0.40 + 0.10 It/Io + 0.10 Mt/Mo + 0.40 ACt/ACo",
-      "K5.1.2",
-    ],
-    K5_1_3: [
-      ["0.40", "0.10", "0.10", "0.40"],
-      ["I", "M", "PVC"],
-      "จัดหาและรับวางท่อ PVC",
-      "K = 0.40 + 0.10 It/Io + 0.10 Mt/Mo + 0.40 PVCt/PVCo",
-      "K5.1.3",
-    ],
-    K5_2_1: [
-      ["0.40", "0.10", "0.15", "0.20", "0.15"],
-      ["I", "M", "E", "F"],
-      "รับวางท่อ GSP HDPE เฉพาะค่าแรง",
-      "K = 0.40 + 0.10 It/Io + 0.15 Mt/Mo + 0.20 Et/Eo + 0.15 Ft/Fo",
-      "K5.2.1",
-    ],
-    K5_2_2: [
-      ["0.40", "0.10", "0.10", "0.10", "0.30"],
-      ["I", "M", "E", "GIP"],
-      "จัดหาและรับวางท่อ GSP",
-      "K = 0.40 + 0.10 It/Io + 0.10 Mt/Mo + 0.10 Et/Eo + 0.30 GIPt/GIPo",
-      "K5.2.2",
-    ],
-    K5_2_3: [
-      ["0.50", "0.10", "0.10", "0.30"],
-      ["I", "M", "PE"],
-      "จัดหาและรับวางท่อ HDPE",
-      "K = 0.50 + 0.10 It/Io + 0.10 Mt/Mo + 0.30 PEt/PEo",
-      "K5.2.3",
-    ],
-    K5_3: [
-      ["0.40", "0.10", "0.15", "0.35"],
-      ["I", "E", "GIP"],
-      "งานปรับปรุงอุโมงค์ส่งน้ำ และงาน SECONDARY LINING",
-      "K = 0.40 + 0.10 It/Io + 0.15 Et/Eo + 0.35 GIPt/GIPo",
-      "K5.3  ",
-    ],
-    K5_4: [
-      ["0.30", "0.10", "0.20", "0.05", "0.05", "0.30"],
-      ["I", "C", "M", "S", "PVC"],
-      "งานวางท่อ PVC หุ้มด้วยคอนกรีต",
-      "K = 0.30 + 0.10 It/Io + 0.20 Ct/Co + 0.05 Mt/Mo + 0.05 St/So + 0.30 PVCt/PVCo",
-      "K5.4  ",
-    ],
-    K5_5: [
-      ["0.25", "0.05", "0.05", "0.65"],
-      ["I", "M", "PVC"],
-      "งานวางท่อ PVC กลบทราย",
-      "K = 0.25 + 0.05 It/Io + 0.05 Mt/Mo + 0.65 PVCt/PVCo",
-      "K5.5  ",
-    ],
-    K5_6: [
-      ["0.25", "0.25", "0.50"],
-      ["I", "GIP"],
-      "งานวางท่อเหล็กอาบสังกะสี",
-      "K = 0.25 + 0.25 It/Io + 0.50 GIPt/GIPo",
-      "K5.6  ",
-    ],
-    K5_7_1: [
-      ["0.60", "0.25", "0.15"],
-      ["I", "F"],
-      "งานติดตั้งโครงเหล็กเสาส่ง และอุปกรณ์ กฟผ.",
-      "K = 0.60 + 0.25 It/Io + 0.15 Ft/Fo",
-      "K5.7.1",
-    ],
-    K5_7_2: [
-      ["0.35", "0.20", "0.20", "0.10", "0.15"],
-      ["I", "C", "S", "F"],
-      "งานก่อสร้างฐานรากเสาไฟฟ้า กฟผ.",
-      "K = 0.35 + 0.20 It/Io + 0.20 Ct/Co + 0.10 St/So + 0.15 Ft/Fo",
-      "K5.7.2",
-    ],
-    K5_7_3: [
-      ["0.50", "0.20", "0.15", "0.15"],
-      ["I", "C", "S"],
-      "งานฐานรากอุปกรณ์สถานีย่อย กฟผ.",
-      "K = 0.50 + 0.20 It/Io + 0.15 Ct/Co + 0.15 St/So",
-      "K5.7.3",
-    ],
-    K5_8_1: [
-      ["0.35", "0.15", "0.20", "0.30"],
-      ["I", "C", "S"],
-      "งานเสาเข็มคอนกรีตอัดแรง",
-      "K = 0.35 + 0.15 It/Io + 0.20 Ct/Co + 0.30 St/So",
-      "K5.8.1",
-    ],
-    K5_8_2: [
-      ["0.30", "0.10", "0.25", "0.35"],
-      ["I", "C", "S"],
-      "งานเสาเข็ม CAST IN PLACE",
-      "K = 0.30 + 0.10 It/Io + 0.25 Ct/Co + 0.35 St/So",
-      "K5.8.2",
-    ],
-    K5_9_1: [
-      ["0.80", "0.05", "0.10", "0.05"],
-      ["I", "M", "F"],
-      "งานสายส่งแรงสูง เฉพาะค่าแรง กฟภ.",
-      "K = 0.80 + 0.05 It/Io + 0.10 Mt/Mo + 0.05 Ft/Fo",
-      "K5.9.1",
-    ],
-    K5_9_2: [
-      ["0.45", "0.05", "0.20", "0.05", "0.25"],
-      ["I", "M", "F", "W"],
-      "งานสายส่งแรงสูง รวมจัดหาและติดตั้ง กฟภ.",
-      "K = 0.45 + 0.05 It/Io + 0.20 Mt/Mo + 0.05 Ft/Fo + 0.25 Wt/Wo",
-      "K5.9.2",
-    ],
-  });
+var kFom = ref(k_fom);
 
 var target = ref(null);
 onClickOutside(target, () => {
@@ -310,13 +65,11 @@ function openKselect() {
 
 <style lang="scss" scoped>
 tr:nth-child(even) {
-  background-color: #f2f2f2;
-}
-tr > td:last-child {
-  max-width: calc(vw - 48px);
+  background-color: rgb(240 253 244);
 }
 
-@media screen and (min-width: 320px) {
+tr:hover {
+  background-color: rgb(220 252 231);
 }
 
 .input-field {
@@ -329,18 +82,35 @@ tr > td:last-child {
   font-family: inherit;
   cursor: pointer;
   padding: 6px;
-  border: 1px solid rgb(187 247 208);
-  border-radius: 4px 0 0 4px;
+  // border: 1px solid rgb(187 247 208);
+  border-radius: 5px 0 0 5px;
+  border: none;
   outline: none;
   background-color: white;
 }
 
 .icon-d {
-  background-color: rgb(220 252 231);
+
   cursor: pointer;
-  border: 1px solid rgb(187 247 208);
-  border-width: 1px 1px 1px 0;
-  border-radius: 0 4px 4px 0;
+  // border: 1px solid rgb(187 247 208);
+  // border-width: 1px 1px 1px 0;
+  // border-radius: 0 4px 4px 0;
   text-align: center;
+}
+
+.k-scroll {
+  scrollbar-color: rgb(187 247 208) rgb(220 252 231);
+  scrollbar-width: thin;
+}
+
+.slide-enter-active,
+.slide-leave-active {
+  transition: all 0.3s ease-out;
+}
+
+.slide-enter-from,
+.slide-leave-to {
+  transform: translateY(-50px);
+  opacity: 0;
 }
 </style>

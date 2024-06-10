@@ -1,10 +1,37 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* @import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap'); */
+
+    @font-face {
+      font-family: 'Kanit';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url('/fonts/Kanit.ttf') format('truetype');
+    }
+  
 @font-face {
     font-family: 'Cooper Black Regular';
     font-style: normal;
     font-weight: normal;
     src: url('/fonts/COOPBL.woff') format('woff');
     font-display: swap;
-    }
+}
+
+@font-face {
+    font-family: 'Sarabun';
+    font-style: normal;
+    font-weight: normal;
+    src: url('/fonts/Sarabun-Regular.ttf') format('truetype');
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Sriracha';
+    font-style: normal;
+    font-weight: normal;
+    src: url('/fonts/Sriracha.ttf') format('truetype');
+    font-display: swap;
+}
+

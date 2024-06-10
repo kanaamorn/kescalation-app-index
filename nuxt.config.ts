@@ -21,8 +21,13 @@ export default defineNuxtConfig({
     "@nuxt/ui",
     "@pinia/nuxt",
     // "@nuxtjs/supabase",
+    '@pinia/nuxt',
     "@vite-pwa/nuxt",
+    "nuxt-lodash"
   ],
+  pinia: {
+    storesDirs: ['./stores/**'],
+  },
   pwa: {
     strategies: sw ? 'injectManifest' : 'generateSW',
     srcDir: sw ? 'service-worker' : undefined,

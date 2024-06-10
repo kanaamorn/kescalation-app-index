@@ -4,7 +4,7 @@
             <UInput v-model="value" @click="openPad" type="button"
                 class="w-[210px] border rounded-md shadow-sm hover:shadow-md"
                 :ui="{ base: 'hover:!cursor-pointer text-right' }" icon="i-solar-hand-money-linear" size="sm" color="white"
-                variant="none" :trailing="false" placeholder="จำนวนเงิน...">
+                variant="none" :trailing="false" placeholder="จำนวนเงิน..." @input="call">
                 <template #trailing>
                     <span class="text-xs text-gray-500 dark:text-gray-400">บาท</span>
                 </template>
@@ -12,29 +12,29 @@
             <Transition name="slide">
                 <div  v-show="isPad" class="border border-gray-50 mt-2 rounded-md shadow-sm w-[210px] p-1 bg-gray-50 dark:bg-gray-800 dark:text-white">
                     <div class="grid grid-cols-3 grid-rows-4 gap-2 p-2 border">
-                        <div class="p-2 font-bold text-center bg-green-300 rounded-sm shadow hover:shadow-md hover:cursor-pointer hover:bg-green-400 dark:bg-green-900 dark:hover:bg-green-800 justify-self-auto"
+                        <div class="p-2 font-bold text-center bg-green-200 rounded-sm shadow hover:shadow-md hover:cursor-pointer hover:bg-green-300 dark:bg-green-900 dark:hover:bg-green-800 justify-self-auto"
                             @click="addNum">7</div>
-                        <div class="p-2 font-bold text-center bg-green-300 rounded-sm shadow hover:shadow-md hover:cursor-pointer hover:bg-green-400 dark:bg-green-900 dark:hover:bg-green-800 justify-self-auto"
+                        <div class="p-2 font-bold text-center bg-green-200 rounded-sm shadow hover:shadow-md hover:cursor-pointer hover:bg-green-300 dark:bg-green-900 dark:hover:bg-green-800 justify-self-auto"
                             @click="addNum">8</div>
-                        <div class="p-2 font-bold text-center bg-green-300 rounded-sm shadow hover:shadow-md hover:cursor-pointer hover:bg-green-400 dark:bg-green-900 dark:hover:bg-green-800 justify-self-auto"
+                        <div class="p-2 font-bold text-center bg-green-200 rounded-sm shadow hover:shadow-md hover:cursor-pointer hover:bg-green-300 dark:bg-green-900 dark:hover:bg-green-800 justify-self-auto"
                             @click="addNum">9</div>
-                        <div class="p-2 font-bold text-center bg-green-300 rounded-sm shadow hover:shadow-md hover:cursor-pointer hover:bg-green-400 dark:bg-green-900 dark:hover:bg-green-800 justify-self-auto"
+                        <div class="p-2 font-bold text-center bg-green-200 rounded-sm shadow hover:shadow-md hover:cursor-pointer hover:bg-green-300 dark:bg-green-900 dark:hover:bg-green-800 justify-self-auto"
                             @click="addNum">4</div>
-                        <div class="p-2 font-bold text-center bg-green-300 rounded-sm shadow hover:shadow-md hover:cursor-pointer hover:bg-green-400 dark:bg-green-900 dark:hover:bg-green-800 justify-self-auto"
+                        <div class="p-2 font-bold text-center bg-green-200 rounded-sm shadow hover:shadow-md hover:cursor-pointer hover:bg-green-300 dark:bg-green-900 dark:hover:bg-green-800 justify-self-auto"
                             @click="addNum">5</div>
-                        <div class="p-2 font-bold text-center bg-green-300 rounded-sm shadow hover:shadow-md hover:cursor-pointer hover:bg-green-400 dark:bg-green-900 dark:hover:bg-green-800 justify-self-auto"
+                        <div class="p-2 font-bold text-center bg-green-200 rounded-sm shadow hover:shadow-md hover:cursor-pointer hover:bg-green-300 dark:bg-green-900 dark:hover:bg-green-800 justify-self-auto"
                             @click="addNum">6</div>
-                        <div class="p-2 font-bold text-center bg-green-300 rounded-sm shadow hover:shadow-md hover:cursor-pointer hover:bg-green-400 dark:bg-green-900 dark:hover:bg-green-800 justify-self-auto"
+                        <div class="p-2 font-bold text-center bg-green-200 rounded-sm shadow hover:shadow-md hover:cursor-pointer hover:bg-green-300 dark:bg-green-900 dark:hover:bg-green-800 justify-self-auto"
                             @click="addNum">1</div>
-                        <div class="p-2 font-bold text-center bg-green-300 rounded-sm shadow hover:shadow-md hover:cursor-pointer hover:bg-green-400 dark:bg-green-900 dark:hover:bg-green-800 justify-self-auto"
+                        <div class="p-2 font-bold text-center bg-green-200 rounded-sm shadow hover:shadow-md hover:cursor-pointer hover:bg-green-300 dark:bg-green-900 dark:hover:bg-green-800 justify-self-auto"
                             @click="addNum">2</div>
-                        <div class="p-2 font-bold text-center bg-green-300 rounded-sm shadow hover:shadow-md hover:cursor-pointer hover:bg-green-400 dark:bg-green-900 dark:hover:bg-green-800 justify-self-auto"
+                        <div class="p-2 font-bold text-center bg-green-200 rounded-sm shadow hover:shadow-md hover:cursor-pointer hover:bg-green-300 dark:bg-green-900 dark:hover:bg-green-800 justify-self-auto"
                             @click="addNum">3</div>
-                        <div class="p-2 font-bold text-center bg-green-300 rounded-sm shadow hover:shadow-md hover:cursor-pointer hover:bg-green-400 dark:bg-green-900 dark:hover:bg-green-800 justify-self-auto"
+                        <div class="p-2 font-bold text-center bg-green-200 rounded-sm shadow hover:shadow-md hover:cursor-pointer hover:bg-green-300 dark:bg-green-900 dark:hover:bg-green-800 justify-self-auto"
                             @click="addNum">C</div>
-                        <div class="p-2 font-bold text-center bg-green-300 rounded-sm shadow hover:shadow-md hover:cursor-pointer hover:bg-green-400 dark:bg-green-900 dark:hover:bg-green-800 justify-self-auto"
+                        <div class="p-2 font-bold text-center bg-green-200 rounded-sm shadow hover:shadow-md hover:cursor-pointer hover:bg-green-300 dark:bg-green-900 dark:hover:bg-green-800 justify-self-auto"
                             @click="addNum">0</div>
-                        <div class="p-2 font-bold text-center bg-green-300 rounded-sm shadow hover:shadow-md hover:cursor-pointer hover:bg-green-400 dark:bg-green-900 dark:hover:bg-green-800 justify-self-auto"
+                        <div class="p-2 font-bold text-center bg-green-200 rounded-sm shadow hover:shadow-md hover:cursor-pointer hover:bg-green-300 dark:bg-green-900 dark:hover:bg-green-800 justify-self-auto"
                             @click="addNum">.</div>
                     </div>
                 </div>
@@ -45,6 +45,15 @@
 
 
 <script setup>
+var props = defineProps({
+  payIndex: {
+    type: Number,
+  },
+  kIndex: {
+    type: Number,
+  },
+});
+var emit = defineEmits(['moneyInput']);
 const value = ref('');
 var isPad = ref(false);
 var target = ref(null);
@@ -52,6 +61,9 @@ var target = ref(null);
 onClickOutside(target, () => {
     isPad.value = false;
 });
+function call () {
+    console.log("i call");
+}
 function openPad() { 
     isPad.value = !isPad.value;
 }
