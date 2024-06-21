@@ -570,8 +570,7 @@ var reports = computed(() => {
   var txt = [];
   var st = timeSummit.value;
   var ft = timeFinish.value;
-  // console.log('st =' + st);
-  // console.log('ft =' + ft);
+
   if (
     st === null ||
     ft === null ||

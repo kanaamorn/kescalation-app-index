@@ -1,10 +1,10 @@
 <template>
-    <div class="relative w-[210px] h-12">
+    <div class="relative w-[210px] h-[36px]">
         <div ref="target" class="absolute z-10 w-[210px]">
             <UInput v-model="value" @click="openPad" type="button"
                 class="w-[210px] border rounded-md shadow-sm hover:shadow-md"
                 :ui="{ base: 'hover:!cursor-pointer text-right' }" icon="i-solar-hand-money-linear" size="sm" color="white"
-                variant="none" :trailing="false" placeholder="จำนวนเงิน..." @input="call">
+                variant="none" :trailing="false" >
                 <template #trailing>
                     <span class="text-xs text-gray-500 dark:text-gray-400">บาท</span>
                 </template>
@@ -53,16 +53,21 @@ var props = defineProps({
     type: Number,
   },
 });
-var emit = defineEmits(['moneyInput']);
+var prj = usePrjStore();
 const value = ref('');
 var isPad = ref(false);
 var target = ref(null);
 // var isTable = ref(false);
 onClickOutside(target, () => {
     isPad.value = false;
+    call();
 });
 function call () {
-    console.log("i call");
+    let vo = value.value
+    let v = vo.replace(/,/g,'');
+    let mv = parseInt(+v * 100);
+    prj.addMoney(mv, props.payIndex,props.kIndex);
+    // console.log("i call ="+ mv );
 }
 function openPad() { 
     isPad.value = !isPad.value;
@@ -71,9 +76,6 @@ function addNum(e) {
     let vo = value.value
     let v = vo.replace(/,/g,'');
     let n = e.target.innerHTML;
-    
-    // console.log(n);
-    // console.log(n === 'C');
     if (n === 'C') {
         value.value = '';
        return;

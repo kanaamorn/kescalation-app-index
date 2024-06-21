@@ -28,6 +28,7 @@ export default defineNuxtConfig({
   pinia: {
     storesDirs: ['./stores/**'],
   },
+  ssr: false,
   pwa: {
     strategies: sw ? 'injectManifest' : 'generateSW',
     srcDir: sw ? 'service-worker' : undefined,

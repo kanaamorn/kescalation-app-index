@@ -1,12 +1,12 @@
 <template>
-    <div ref="target" class="relative w-full text-green-700 max-w-[200px]">
-        <div @click="openCalendar" class="flex w-[200px] cursor-pointer  rounded">
-            <UInput disabled v-model="thaiMark" icon="i-zondicons-calendar" size="md" color="white"  trailing
-                :placeholder="name" :ui="{base: 'pointer-events-none opacity-100'}" />
-
+    <div ref="target" class="relative w-[280px] text-blue-600 ">
+        <div @click="openCalendar" class="absolute flex flex-row w-full">
+            <input type="text" class=" input-field placeholder:text-blue-300" :value="thaiMark" :placeholder="name" />
+            <button type="submit" class="icon-d min-w-[38px]">
+                <Icon name="zondicons:calendar" />
+            </button>
         </div>
-        <div v-if="isTable"
-            class="absolute z-30 w-[320px] bg-white border  border-gray-100 rounded-md shadow-md top-11 left-[-60px] origin-top scale-[.88]">
+        <div v-if="isTable" class="absolute z-10 w-[320px] bg-white border  border-gray-100 rounded-md shadow-md top-11 left-[-20px] origin-top scale-[.88]">
             <div class="">
                 <div class="flex justify-between px-3 mt-4 mb-2">
                     <div @click="add(-1)" :style="{ visibility: navBtn.lm }">
@@ -51,19 +51,39 @@
 </template>
 
 <script setup>
+
 var months = ["มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"];
-// var emit = defineEmits(['selectedDate']);
+var emit = defineEmits(['selectedDate']);
 var props = defineProps({
     name: {
         type: String
+    },
+    timeRangeA: {
+        type: Number,
+        default: 1167584400000,
+    },
+    timeRangeZ: {
+        type: Number,
+        default: Date.now(),
+    },
+    timeSummit: {
+        type: Number,
+        default: null,
+    },
+    timeFinish: {
+        type: Number,
+        default: null,
+    },
+   
+    timePay: {
+        type: Object,
     },
     payIndex: {
         type: Number,
         default: null
     },
 });
-var prj = usePrjStore();
-var { timeRangeA, timeRangeZ, timeSummit, timeFinish, timePaysArr } = storeToRefs(prj);
+
 var target = ref(null);
 var isTable = ref(false);
 onClickOutside(target, () => {
@@ -71,59 +91,59 @@ onClickOutside(target, () => {
 });
 var tMark = ref(null);
 var name = ref(props.name);
-// console.log(timePaysArr.value);
+
 var tStart = computed(() => {
-    // timeSummit;
-    // timePaysArr;
-    // timeFinish;
     if (props.name === "วันเสนอราคา") {
-        return timeRangeA.value;
+        return props.timeRangeA;
     }
     if (props.name === "วันสิ้นสุดสัญญา") {
-        return timeSummit.value;
+        return props.timeSummit;
     }
-    if (props.name.includes("วันส่งมอบงาน")) {
+    if (props.name === "วันส่งมอบงาน") {
         var i = props.payIndex;
-        console.log('ส่งมอบ ' + i);
         if (i === 0) {
-            return timeSummit.value;
+            return props.timeSummit;
         } else if (i > 0) {
-            console.log('ส่งมอบ มากกว่า ' + i);
-            return timePaysArr.value[i - 1];
-
+            return props.timePay[i - 1].time;
         }
     }
 })
 var tEnd = computed(() => {
-    // timeSummit;
-    // timePaysArr;
-    // timeFinish;
     if (props.name === "วันเสนอราคา") {
-        // console.log('ssss' + timePaysArr);
-        if (timeFinish.value === null) {
-            // console.log('s1' + new Date(timeRangeZ.value));
-            return timeRangeZ.value;
-        } else if (timePaysArr.value.length === 1 && timePaysArr.value[0] === null && timeFinish.value !== null) {
-            // console.log('s2' + new Date(timeFinish.value));
-            return timeFinish.value;
-        } else if (timePaysArr.value.length >= 1 && timeFinish.value !== null) {
-            // console.log('s3' + new Date(timeFinish.value));
-            return timeFinish.value >= timePaysArr.value[0]
-                ? timePaysArr.value[0]
-                : timeFinish.value;
+        if (props.timePay[0].time === null && props.timeFinish === null) {
+            console.log('s1' + new Date(props.timeRangeZ));
+            return props.timeRangeZ;
+        } else if (props.timePay[0].time === null && props.timeFinish !== null) {
+            console.log('s2' + new Date(props.timeFinish));
+            return props.timeFinish;
+        } else if (props.timePay[0].time !== null && props.timeFinish !== null) {
+            console.log(
+                "s3" +
+                new Date(
+                    props.timeFinish >= props.timePay[0].time
+                        ? props.timePay[0].time
+                        : props.timeFinish
+                )
+            );
+            return props.timeFinish >= props.timePay[0].time
+                ? props.timePay[0].time
+                : props.timeFinish;
         }
     }
-    if (props.name.includes("วันสิ้นสุดสัญญา")) {
-        return Date.now() + 86400000 * 3650 - 1;
+    if (props.name === "วันสิ้นสุดสัญญา") {
+        return Date.now() + 86400000 * 3650;
     }
-    if (props.name.includes("วันส่งมอบงาน")) {
+    if (props.name === "วันส่งมอบงาน") {
         var i = props.payIndex;
-        if (timePaysArr.value[i] === null) {
-            return timeRangeZ.value;
-        } else if ((timePaysArr.value[i] !== null) && (typeof timePaysArr.value[i + 1] === 'undefined' || timePaysArr.value[i + 1] === null)) {
-            return timeRangeZ.value;
-        } else if ((timePaysArr.value[i] !== null) && (timePaysArr.value[i + 1] !== null)) {
-            return timePaysArr.value[i + 1];
+        // console.log('i===='+i );
+        // console.log('timepay i ===='+ typeof props.timePay[i + 1]);
+        // console.log('timepay i+1 ===='+ props.timePay[i+1]);
+        if (props.timePay[i].time === null) {
+            return props.timeRangeZ;
+        } else if ((props.timePay[i].time !== null) && (typeof props.timePay[i + 1] === 'undefined' || props.timePay[i + 1].time === null)) {
+            return props.timeRangeZ;
+        } else if ((props.timePay[i].time !== null) && (props.timePay[i + 1].time !== null)) {
+            return props.timePay[i + 1];
         }
     }
 })
@@ -138,13 +158,19 @@ var ct = () => {
         return tMark.value
     }
 };
+// console.log(ct());
+var t = ref(null);
 
-var t = ref(null);//หน้าที่เปิด datePicker
+// watch(()=>props.timeRangeZ, () => { 
+ 
+//   console.log('watch');
+// })
+
 var thaiMark = computed(() => {
     if (tMark.value === null) {
         return '';
     }
-
+   
     var markD = new Date(tMark.value);
     return markD.getDate() + ' ' + months[markD.getMonth()] + ' ' + (markD.getFullYear() + 543);
 });
@@ -155,7 +181,7 @@ var thaiYear = computed(() => { ; return new Date(t.value).getFullYear() + 543 }
 );
 function selectDate(t) {
     tMark.value = t;
-    prj.selectedDate(t, name.value, props.payIndex);
+    emit('selectedDate', t, name.value, props.payIndex);
     isTable.value = false;
 }
 class DatePic {
@@ -172,7 +198,7 @@ function openCalendar() {
     isTable.value = !isTable.value;
     if (isTable.value) {
         t.value = ct();
-
+        
         createCalender();
     };
 
@@ -270,15 +296,13 @@ var add = (n) => {
         // console.log(new Date(newDate));
         // console.log('this range');
         // console.log(new Date(t.value));
-    }
+     }
     // console.log(oldDate);
     // console.log(new Date(t.value));
     createCalender();
 }
 
-onMounted(() => {
 
-})
 
 
 </script>
@@ -290,11 +314,13 @@ td {
     border: 1px solid rgb(30 64 175);
 }
 
-
+th {
+    padding: max(2px, calc(2px + (3.3vw - 6.6px)));
+}
 
 td {
-    height: 37px;
     text-align: center;
+    padding: max(2px, calc(2px + (3.3vw - 6.6px)));
 }
 
 td>div {
@@ -352,7 +378,35 @@ td span {
             width: 30px;
             height: 30px;
             // margin: auto;
+
         }
     }
+
+
+
+}
+
+.input-field {
+    overflow: hidden;
+    width: 100%;
+    //   color: #888;
+    text-align: left;
+    font-family: inherit;
+    cursor: pointer;
+    padding: 6px;
+    border: 1px solid #ccc;
+    border-width: 1px;
+    border-radius: 4px 0 0 4px;
+    outline: none;
+    background-color: white;
+}
+
+.icon-d {
+    background-color: #f2f2f2;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    border-width: 1px 1px 1px 0;
+    border-radius: 0 4px 4px 0;
+    text-align: center;
 }
 </style>

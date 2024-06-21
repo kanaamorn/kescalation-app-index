@@ -1,7 +1,7 @@
 <template>
   <div ref="target" class="relative w-full max-w-[360px]">
     <div @click="openKselect"
-      class="absolute flex flex-row w-full border border-green-200 rounded-md shadow-sm hover:shadow-md">
+      class="flex flex-row w-full border border-green-200 rounded-md shadow-sm hover:shadow-md">
       <input type="text" class="text-sm input-field placeholder:text-green-300" :value="kValue" :title="kDes"
         placeholder="เลือกค่า K" />
       <button type="submit" class="icon-d min-w-[38px] bg-green-200">
@@ -28,7 +28,6 @@
 <script setup>
 // import {useThaiMonthsStore} from "@/stores/kescal.js";
 
-// defineEmits(['selectedTime']);
 var props = defineProps({
   payIndex: {
     type: Number,
@@ -39,15 +38,16 @@ var props = defineProps({
 });
 var kValue = ref(null);
 var kDes = ref(null);
-var emit = defineEmits(['selectKValue']);
+
 function selectK(k, m4, m2) {
   kValue.value = m4 + " " + m2;
   kDes.value = m4 + m2;
   isOpenK.value = false;
-  emit('selectKValue', k, props.payIndex, props.kIndex)
+  prj.selectKValue(k, props.payIndex, props.kIndex);
+  
 }
 import { k_fom } from '~/assets/js/kvar.js';
-
+var prj = usePrjStore();
 var kFom = ref(k_fom);
 
 var target = ref(null);
