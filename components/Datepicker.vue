@@ -1,8 +1,8 @@
 <template>
     <div ref="target" class="relative w-full text-green-700 max-w-[200px]">
         <div @click="openCalendar" class="flex w-[200px] cursor-pointer  rounded">
-            <UInput disabled v-model="thaiMark" icon="i-zondicons-calendar" size="md" color="white"  trailing
-                :placeholder="name" :ui="{base: 'pointer-events-none opacity-100'}" />
+            <UInput disabled v-model="thaiMark" icon="i-zondicons-calendar" size="md" color="white" trailing
+                :placeholder="name" :ui="{ base: 'pointer-events-none opacity-100' }" />
 
         </div>
         <div v-if="isTable"
@@ -62,8 +62,9 @@ var props = defineProps({
         default: null
     },
 });
+import { thaiDate, kMonth } from '~/assets/js/kvar.js';
 var prj = usePrjStore();
-var { timeRangeA, timeRangeZ, timeSummit, timeFinish, timePaysArr } = storeToRefs(prj);
+var { timeRangeA, timeRangeZ, timeSummit, timePays:timePay, timeFinish, timePaysArr,prjStr } = storeToRefs(prj);
 var target = ref(null);
 var isTable = ref(false);
 onClickOutside(target, () => {
@@ -73,9 +74,6 @@ var tMark = ref(null);
 var name = ref(props.name);
 // console.log(timePaysArr.value);
 var tStart = computed(() => {
-    // timeSummit;
-    // timePaysArr;
-    // timeFinish;
     if (props.name === "วันเสนอราคา") {
         return timeRangeA.value;
     }
@@ -84,20 +82,18 @@ var tStart = computed(() => {
     }
     if (props.name.includes("วันส่งมอบงาน")) {
         var i = props.payIndex;
-        console.log('ส่งมอบ ' + i);
+        // console.log('ส่งมอบ ' + i);
         if (i === 0) {
             return timeSummit.value;
         } else if (i > 0) {
-            console.log('ส่งมอบ มากกว่า ' + i);
+            // console.log('ส่งมอบ มากกว่า ' + i);
             return timePaysArr.value[i - 1];
 
         }
     }
 })
 var tEnd = computed(() => {
-    // timeSummit;
-    // timePaysArr;
-    // timeFinish;
+ 
     if (props.name === "วันเสนอราคา") {
         // console.log('ssss' + timePaysArr);
         if (timeFinish.value === null) {
@@ -153,10 +149,90 @@ var thaiMonth = computed(() => { return months[new Date(t.value).getMonth()] }
 );
 var thaiYear = computed(() => { ; return new Date(t.value).getFullYear() + 543 }
 );
+function selectedDate(t, name, i) {
+    if (name === "วันเสนอราคา") {
+      timeSummit.value = t;
+    } else if (name === "วันสิ้นสุดสัญญา") {
+      timeFinish.value = t;
+    } else if (name.includes("วันส่งมอบงาน")) {
+      timePay.value[i].time = t;
+    }
+  }
 function selectDate(t) {
     tMark.value = t;
-    prj.selectedDate(t, name.value, props.payIndex);
+    selectedDate(t, name.value, props.payIndex);
     isTable.value = false;
+    if ((name.value === "วันเสนอราคา" || name.value === "วันสิ้นสุดสัญญา") && (timeSummit.value !== null || timeFinish.value !== null) ) {
+        // console.log('calPrjStr');
+        calPrjStr();
+    }
+    if (timeSummit.value === null || timeFinish.value === null || timePay.value[0].time === null) {
+        // console.log('no 1-1');
+      return;
+    } else if (name.value.includes("วันส่งมอบงาน")) {
+        // console.log('no 1-2');
+        calPayStr(props.payIndex);
+    }else if (timeSummit.value !== null || timeFinish.value !== null || timePay.value[pi].time !== null) {
+        // console.log('no 1-3');
+        for (let i = 0; i < timePay.value.length; i++) {
+           
+            calPayStr(i);
+        }
+        
+    }
+
+   
+}
+function calPrjStr() {  
+    var st = timeSummit.value;
+    var ft = timeFinish.value;
+    var str = [];
+    if (st === null || ft === null) { return }
+    else {
+        str.push(`วันเสนอราคา    ${thaiDate(st)[3]}`);
+        str.push(`วันสิ้นสุดสัญญา  ${thaiDate(ft)[3]}`);
+        prjStr.value = str;
+        str.forEach((v) => {
+              console.log(v);
+        });
+    }
+}
+var calPayStr = (pi) => {
+    
+    // var ts = timeSummit.value;
+    var tf = timeFinish.value;
+    var tp = timePay.value[pi].time;
+    if (tp === null) {
+       return; 
+    }
+    var txt = [];
+    // console.log('no 3');
+    txt.push(`วันส่งมอบงาน งวดที่ ${pi + 1}   ${thaiDate(tp)[3]}`);
+    if (tp <= tf) {
+        var isInTime = true;
+        txt.push(`\tวันส่งมอบงาน งวดที่ ${pi + 1} ไม่เกิน วันสิ้นสุดสัญญา`);
+        txt.push(`\tคำนวนค่า K เฉพาะเดือนวันส่งมอบงาน`);
+    } else if (tp > tf) {
+        var pts = new Date(tp).getFullYear().toString() + kMonth[new Date(tp).getMonth()];
+        var fts = new Date(tf).getFullYear().toString() + kMonth[new Date(tf).getMonth()];
+        if (pts === fts) {
+            var isInTime = true;
+            txt.push(`\tวันส่งมอบงาน งวดที่ ${pi + 1} เกิน วันสิ้นสุดสัญญา`);
+            txt.push(`\tแต่เดือนวันส่งมอบงาน อยู่ภายในเดือนวันสิ้นสุดสัญญา`);
+            txt.push(`\tคำนวนค่า K เฉพาะเดือนวันส่งมอบงาน`);
+        } else {
+            var isInTime = false;
+            txt.push(`\tวันส่งมอบงาน งวดที่ ${pi + 1} เกิน วันสิ้นสุดสัญญา`);
+            txt.push(`\tคำนวนค่า K ทั้งเดือนวันส่งมอบงาน และเดือนวันสิ้นสุดสัญญา ค่าไหนน้อยกว่าใช้ค่านั้น`);
+        }
+    }
+    timePay.value[pi].str = txt;
+    timePay.value[pi].isInTime = isInTime;
+    txt.forEach((va) => {
+        console.log(va);
+        
+    })
+    // console.log(JSON.stringify(timePay.value));
 }
 class DatePic {
     constructor(date, time) {

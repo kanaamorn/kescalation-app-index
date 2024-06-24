@@ -1,17 +1,18 @@
-import { k_value, k_select } from "~/assets/js/kvar";
+import { k_value } from "~/assets/js/kvar";
 export const usePrjStore = defineStore('prj', () => {
   var kValue = ref(k_value);
-  var kSelect = k_select();
- 
   var month = ["มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"];
   var kMonth = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
   var timeSummit = ref(null);
   var timeFinish = ref(null);
+  var prjStr = ref([]);
   class Pay {
     constructor() {
       this.id = Date.now().toString();
       this.time = null;
+      this.isInTime = null;
       this.kvalues = [];
+      this.str = null;
     }
   }
   class Kindex {
@@ -21,7 +22,7 @@ export const usePrjStore = defineStore('prj', () => {
       this.money = 0;
       this.kRe = '';
       this.mRe = '';
-      this.msg = [];
+      this.msg = null;
     }
   }
   var timePays = ref([]);
@@ -70,9 +71,6 @@ export const usePrjStore = defineStore('prj', () => {
       return arr;
     }
   })
-  watch(timePaysArr, () => {
-    console.log('timePaysArr = ' + JSON.stringify(timePaysArr.value));
-  })
   
   var timeRangeA = computed(() => {
     var minT = Object.keys(kValue.value).sort()[0];
@@ -89,22 +87,16 @@ export const usePrjStore = defineStore('prj', () => {
     maxD.setFullYear(maxD.getFullYear(), maxD.getMonth() + 1, 1);
     return maxD.getTime() - (1000 * 60 * 60 * 7) - 1;
   })
-  function selectedDate(t, name, i) {
-    if (name === "วันเสนอราคา") {
-      timeSummit.value = t;
-    } else if (name === "วันสิ้นสุดสัญญา") {
-      timeFinish.value = t;
-    } else if (name.includes("วันส่งมอบงาน")) {
-      timePays.value[i].time = t;
-    }
-  }
-  function selectKValue(kv, pi, ki) {
-    timePays.value[pi].kvalues[ki].kindex = kv;
-  }
-  function addMoney(mv, pi, ki) {
-    timePays.value[pi].kvalues[ki].money = mv;
-  }
-
+  // function selectedDate(t, name, i) {
+  //   if (name === "วันเสนอราคา") {
+  //     timeSummit.value = t;
+  //   } else if (name === "วันสิ้นสุดสัญญา") {
+  //     timeFinish.value = t;
+  //   } else if (name.includes("วันส่งมอบงาน")) {
+  //     timePays.value[i].time = t;
+  //   }
+  // }
+ 
   
   function delPay(i) {
     timePays.value.splice(i, 1);
@@ -119,5 +111,5 @@ export const usePrjStore = defineStore('prj', () => {
 
   });
 
-  return { timeRangeA, timeRangeZ, timeSummit, timeFinish, timePays, timePaysArr, kvaluesArr, kValue,refreshPrj, addPay, delPay, selectedDate, selectKValue, addK, delK, addMoney };
+  return { timeRangeA, timeRangeZ, timeSummit, timeFinish, timePays, timePaysArr, kvaluesArr, kValue,prjStr,refreshPrj, addPay, delPay, addK, delK };
 });

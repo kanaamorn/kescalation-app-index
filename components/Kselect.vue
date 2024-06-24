@@ -36,6 +36,8 @@ var props = defineProps({
     type: Number,
   },
 });
+var prj = usePrjStore();
+var {timeSummit,timeFinish, timePays: timePay, timePaysArr,} = storeToRefs(prj);
 var kValue = ref(null);
 var kDes = ref(null);
 
@@ -43,10 +45,9 @@ function selectK(k, m4, m2) {
   kValue.value = m4 + " " + m2;
   kDes.value = m4 + m2;
   isOpenK.value = false;
-  prj.selectKValue(k, props.payIndex, props.kIndex);
-  
+  // selectKValue(k, props.payIndex, props.kIndex);
 }
-import { k_fom } from '~/assets/js/kvar.js';
+import { k_fom, thaiDate, kMonth } from '~/assets/js/kvar.js';
 var prj = usePrjStore();
 var kFom = ref(k_fom);
 
@@ -59,8 +60,43 @@ var isOpenK = ref(false);
 function openKselect() {
   isOpenK.value = !isOpenK.value;
 }
-
-
+function selectKValue(kv, pi, ki) {
+    timePay.value[pi].kvalues[ki].kindex = kv;
+    console.log('no 1' + pi);
+    console.log(timePay.value[pi].time);
+    if (timeSummit.value ===null || timeFinish.value === null || timePay.value[pi].time === null) {
+      console.log('no 1-2');
+      return;
+    }
+    console.log('no 2');
+    calKitemStr(timeSummit.value,timeFinish.value,timePay.value[pi].time,kv,pi,ki);
+  }
+var calKitemStr = (ts,tf,tp,kv,pi,ki) => {
+  var txt = [];
+  console.log('no 3');
+  txt.push( `วันส่งมอบงาน งวดที่${pi + 1}   ${thaiDate(tp)[3] }` );
+  if (tp <= tf) {
+            var isInTime = true;
+            txt.push(`\tวันส่งมอบงาน งวดที่${pi + 1} ไม่เกิน วันสิ้นสุดสัญญา`);
+            txt.push(`\tคำนวนค่า K เฉพาะเดือนวันส่งมอบงาน`);
+        } else if (tp > tf) {
+            var pts = new Date(tp).getFullYear().toString() + kMonth[new Date(tp).getMonth()];
+            var fts = new Date(tf).getFullYear().toString() + kMonth[new Date(tf).getMonth()];
+            if (pts === fts) {
+                var isInTime = true;
+                txt.push(`\tวันส่งมอบงาน งวดที่${pi + 1} เกิน วันสิ้นสุดสัญญา`);
+                txt.push(`\tแต่เดือนวันส่งมอบงาน อยู่ภายในเดือนวันสิ้นสุดสัญญา`);
+                txt.push(`\tคำนวนค่า K เฉพาะเดือนวันส่งมอบงาน`);
+            } else {
+                var isInTime = false;
+                txt.push(`\tวันส่งมอบงาน งวดที่${pi + 1} เกิน วันสิ้นสุดสัญญา`);
+                txt.push(`\tคำนวนค่า K ทั้งเดือนวันส่งมอบงาน และเดือนวันสิ้นสุดสัญญา ค่าไหนน้อยกว่าใช้ค่านั้น`);
+            }
+        } 
+        txt.forEach((va) => {
+          console.log(va);
+        })
+}
 </script>
 
 <style lang="scss" scoped>

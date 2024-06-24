@@ -289,5 +289,15 @@ var k_index = () => {
     })
     return ks;
 };
-
-export { k_fom, k_select, k_formula, k_mutiply, k_index, k_name, k_value };  
+var kMonth = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
+var month = ["มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"];
+var thaiDate = (t) => {
+    var d = new Date(t);
+    var y = d.getFullYear() + 543;
+    var m = month[d.getMonth()];
+    var td = d.getDate();
+    var tF = td + " " + m + " " + y;
+    var tmy = m + " " + y;
+    return [td, m, y, tF, tmy]; 
+}
+export { k_fom, k_select, k_formula, k_mutiply, k_index, k_name, k_value , thaiDate,kMonth };  

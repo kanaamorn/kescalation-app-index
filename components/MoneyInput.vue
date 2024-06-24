@@ -54,6 +54,7 @@ var props = defineProps({
   },
 });
 var prj = usePrjStore();
+var {timePays: timePay, timePaysArr,} = storeToRefs(prj);
 const value = ref('');
 var isPad = ref(false);
 var target = ref(null);
@@ -66,9 +67,12 @@ function call () {
     let vo = value.value
     let v = vo.replace(/,/g,'');
     let mv = parseInt(+v * 100);
-    prj.addMoney(mv, props.payIndex,props.kIndex);
+    addMoney(mv, props.payIndex,props.kIndex);
     // console.log("i call ="+ mv );
 }
+function addMoney(mv, pi, ki) {
+    timePay.value[pi].kvalues[ki].money = mv;
+  }
 function openPad() { 
     isPad.value = !isPad.value;
 }
