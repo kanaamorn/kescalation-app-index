@@ -300,4 +300,4 @@ var thaiDate = (t) => {
     var tmy = m + " " + y;
     return [td, m, y, tF, tmy]; 
 }
-export { k_fom, k_select, k_formula, k_mutiply, k_index, k_name, k_value , thaiDate,kMonth };  
+export { k_fom, k_select, k_formula, k_mutiply, k_index, k_name, k_value , thaiDate,kMonth,month };  

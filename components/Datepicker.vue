@@ -39,7 +39,7 @@
                 </tr>
                 <tr v-for="m in 6" :key="m">
                     <td v-for="n in 7 " :key="n" :class="cd[(m - 1) * 7 + (n - 1)].classObj"
-                        @click="selectDate(cd[(m - 1) * 7 + (n - 1)].time)">
+                        @click="selectDate(cd[(m - 1) * 7 + (n - 1)].time,pIndex)">
                         <div class="inline-block text-center rounded-full">
                             <span>{{ cd[(m - 1) * 7 + (n - 1)].date }}</span>
                         </div>
@@ -64,7 +64,9 @@ var props = defineProps({
 });
 import { thaiDate, kMonth } from '~/assets/js/kvar.js';
 var prj = usePrjStore();
-var { timeRangeA, timeRangeZ, timeSummit, timePays:timePay, timeFinish, timePaysArr,prjStr } = storeToRefs(prj);
+var { timeRangeA, timeRangeZ, timeSummit, timePays: timePay, timeFinish, timePaysArr, prjStr } = storeToRefs(prj);
+// var {calKitem} = prj;
+// console.log(calKitem);
 var target = ref(null);
 var isTable = ref(false);
 onClickOutside(target, () => {
@@ -72,6 +74,7 @@ onClickOutside(target, () => {
 });
 var tMark = ref(null);
 var name = ref(props.name);
+var pIndex = ref(props.payIndex)
 // console.log(timePaysArr.value);
 var tStart = computed(() => {
     if (props.name === "วันเสนอราคา") {
@@ -93,7 +96,7 @@ var tStart = computed(() => {
     }
 })
 var tEnd = computed(() => {
- 
+
     if (props.name === "วันเสนอราคา") {
         // console.log('ssss' + timePaysArr);
         if (timeFinish.value === null) {
@@ -151,39 +154,74 @@ var thaiYear = computed(() => { ; return new Date(t.value).getFullYear() + 543 }
 );
 function selectedDate(t, name, i) {
     if (name === "วันเสนอราคา") {
-      timeSummit.value = t;
+        timeSummit.value = t;
     } else if (name === "วันสิ้นสุดสัญญา") {
-      timeFinish.value = t;
+        timeFinish.value = t;
     } else if (name.includes("วันส่งมอบงาน")) {
-      timePay.value[i].time = t;
+        timePay.value[i].time = t;
     }
-  }
-function selectDate(t) {
+    return 0;
+}
+function selectDate(t,pi) {
     tMark.value = t;
     selectedDate(t, name.value, props.payIndex);
     isTable.value = false;
-    if ((name.value === "วันเสนอราคา" || name.value === "วันสิ้นสุดสัญญา") && (timeSummit.value !== null || timeFinish.value !== null) ) {
-        // console.log('calPrjStr');
-        calPrjStr();
-    }
+    console.log('st' );
     if (timeSummit.value === null || timeFinish.value === null || timePay.value[0].time === null) {
-        // console.log('no 1-1');
-      return;
-    } else if (name.value.includes("วันส่งมอบงาน")) {
-        // console.log('no 1-2');
-        calPayStr(props.payIndex);
-    }else if (timeSummit.value !== null || timeFinish.value !== null || timePay.value[pi].time !== null) {
-        // console.log('no 1-3');
-        for (let i = 0; i < timePay.value.length; i++) {
-           
-            calPayStr(i);
-        }
-        
+        return;
     }
+    if (name.value.includes("วันส่งมอบงาน")) {
+        calPayStr(props.payIndex);
+        console.log('loop ki');
+        for (let ki = 0; ki < timePay.value[pi].kvalues.length; ki++) {
+            console.log('loop ki='+ ki);
+                var st = timeSummit.value;
+                var ft = timeFinish.value;
+                var pt = timePay.value[pi].time;
+                var kv = timePay.value[pi].kindex;
+                if (kv === null || pt === null) {
+                    continue;
+                }
+                console.log('befor call calKitem' );
+                prj.calKitem(st, ft, pt, kv, pi, ki);
+                console.log('kval' + timePay.value[pi].kvalues[ki].kval + 'pi time=' + new Date(pt) + 'time=' + new Date() );
 
-   
+            }
+    }
+    console.log('before st2');
+    console.log(timeSummit.value !== null);
+    console.log(timePay.value[0].time !== null);
+    console.log('before st2');
+    console.log('before st2');
+    if ((name.value === "วันเสนอราคา" || name.value === "วันสิ้นสุดสัญญา") && timePay.value[0].time !== null && timeSummit.value !== null && timeFinish.value !== null) {
+        console.log('st2');
+        for (let pi = 0; pi < timePay.value.length; pi++) {
+            console.log('loop pi');
+            if (timePay.value[pi].time === null) {
+                continue;
+            }
+            calPayStr(pi);
+            for (let ki = 0; ki < timePay.value[pi].kvalues.length; ki++) {
+                console.log('loop ki');
+                var st = timeSummit.value;
+                var ft = timeFinish.value;
+                var pt = timePay.value[pi].time;
+                var kv = timePay.value[pi].kindex;
+                if (kv === null || pt === null) {
+                    continue;
+                }
+                prj.calKitem(st, ft, pt, kv, pi, ki);
+                console.log('loop ki' + timePay.value[pi].kvalues[ki].kval);
+
+            }
+
+        }
+    }
+    
+
+
 }
-function calPrjStr() {  
+function calPrjStr() {
     var st = timeSummit.value;
     var ft = timeFinish.value;
     var str = [];
@@ -193,17 +231,17 @@ function calPrjStr() {
         str.push(`วันสิ้นสุดสัญญา  ${thaiDate(ft)[3]}`);
         prjStr.value = str;
         str.forEach((v) => {
-              console.log(v);
+            console.log(v);
         });
     }
 }
 var calPayStr = (pi) => {
-    
+
     // var ts = timeSummit.value;
     var tf = timeFinish.value;
     var tp = timePay.value[pi].time;
     if (tp === null) {
-       return; 
+        return;
     }
     var txt = [];
     // console.log('no 3');
@@ -228,9 +266,10 @@ var calPayStr = (pi) => {
     }
     timePay.value[pi].str = txt;
     timePay.value[pi].isInTime = isInTime;
+    console.log('isInTime = ' + isInTime);
     txt.forEach((va) => {
         console.log(va);
-        
+
     })
     // console.log(JSON.stringify(timePay.value));
 }
