@@ -44,13 +44,13 @@ var kVal = ref(null);
 var kDes = ref(null);
 function selectKValue(kv, pi, ki) {
   timePay.value[pi].kvalues[ki].kindex = kv;
-  console.log('no 1' + pi);
-  console.log(timePay.value[pi].time);
+  // console.log('no 1' + pi);
+  // console.log(timePay.value[pi].time);
   if (timeSummit.value === null || timeFinish.value === null || timePay.value[pi].time === null) {
     // console.log('no 1-2');
     return;
   }
-  console.log('no 2');
+  // console.log('no 2');
   // console.log(calKitem);
   calKitem(timeSummit.value, timeFinish.value, timePay.value[pi].time, kv, pi, ki);
 }

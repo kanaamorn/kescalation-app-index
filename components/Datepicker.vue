@@ -166,15 +166,17 @@ function selectDate(t,pi) {
     tMark.value = t;
     selectedDate(t, name.value, props.payIndex);
     isTable.value = false;
-    console.log('st' );
+    // console.log('st' );
+    if (timeSummit.value !== null || timeFinish.value !== null ) { calPrjStr();}
     if (timeSummit.value === null || timeFinish.value === null || timePay.value[0].time === null) {
         return;
     }
+    
     if (name.value.includes("วันส่งมอบงาน")) {
         calPayStr(props.payIndex);
-        console.log('loop ki');
+        // console.log('loop ki');
         for (let ki = 0; ki < timePay.value[pi].kvalues.length; ki++) {
-            console.log('loop ki='+ ki);
+            // console.log('loop ki='+ ki);
                 var st = timeSummit.value;
                 var ft = timeFinish.value;
                 var pt = timePay.value[pi].time;
@@ -184,15 +186,15 @@ function selectDate(t,pi) {
                 }
                 console.log('befor call calKitem' );
                 prj.calKitem(st, ft, pt, kv, pi, ki);
-                console.log('kval' + timePay.value[pi].kvalues[ki].kval + 'pi time=' + new Date(pt) + 'time=' + new Date() );
+                // console.log('kval' + timePay.value[pi].kvalues[ki].kval + 'pi time=' + new Date(pt) + 'time=' + new Date() );
 
             }
     }
-    console.log('before st2');
-    console.log(timeSummit.value !== null);
-    console.log(timePay.value[0].time !== null);
-    console.log('before st2');
-    console.log('before st2');
+    // console.log('before st2');
+    // console.log(timeSummit.value !== null);
+    // console.log(timePay.value[0].time !== null);
+    // console.log('before st2');
+    // console.log('before st2');
     if ((name.value === "วันเสนอราคา" || name.value === "วันสิ้นสุดสัญญา") && timePay.value[0].time !== null && timeSummit.value !== null && timeFinish.value !== null) {
         console.log('st2');
         for (let pi = 0; pi < timePay.value.length; pi++) {
@@ -235,6 +237,7 @@ function calPrjStr() {
         });
     }
 }
+
 var calPayStr = (pi) => {
 
     // var ts = timeSummit.value;
@@ -245,6 +248,7 @@ var calPayStr = (pi) => {
     }
     var txt = [];
     // console.log('no 3');
+    txt.push('');
     txt.push(`วันส่งมอบงาน งวดที่ ${pi + 1}   ${thaiDate(tp)[3]}`);
     if (tp <= tf) {
         var isInTime = true;

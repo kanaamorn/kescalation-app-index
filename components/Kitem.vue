@@ -17,7 +17,7 @@
             </div>
         </div>
         <div v-if="timePay[pi].kvalues[ki].kval" class="p-4 text-sm">
-            <div v-if="+timePay[pi].kvalues[ki].kval * 1000 >= 1040">
+            <div v-if="+timePay[pi].kvalues[ki].kval * 1000 > 1040">
                 <p>{{ `ค่า K = ${timePay[pi].kvalues[ki].kval} เพิ่มขึ้นมากกว่า 4%(1.040) ` }}</p>
                 <p>{{ `ได้รับเงินชดเชย เท่ากับ ${timePay[pi].kvalues[ki].kval} - 1.04 = ${(timePay[pi].kvalues[ki].kreturn)}` }}</p>
                 <p>{{ `จำนวนเงินส่งงวด รายการนี้ = ${(timePay[pi].kvalues[ki].money / 100).toLocaleString("th-TH", { maximumFractionDigits: "2", minimumFractionDigits: "2" })} บาท` }}</p>

@@ -69,25 +69,17 @@ export const usePrjStore = defineStore('prj', () => {
     maxD.setFullYear(maxD.getFullYear(), maxD.getMonth() + 1, 1);
     return maxD.getTime() - (1000 * 60 * 60 * 7) - 1;
   })
-  // function selectedDate(t, name, i) {
-  //   if (name === "วันเสนอราคา") {
-  //     timeSummit.value = t;
-  //   } else if (name === "วันสิ้นสุดสัญญา") {
-  //     timeFinish.value = t;
-  //   } else if (name.includes("วันส่งมอบงาน")) {
-  //     timePays.value[i].time = t;
-  //   }
-  // }
+
  
   
   function delPay(i) {
-    timePays.value.splice(i, 1);
+    if (confirm('ท่านต้องการลบ งวดที่ ' + (i+1)) == true) { timePays.value.splice(i, 1); }
   }
   function addK(i) {
     timePays.value[i].kvalues.push(new Kindex);
   }
   function delK(i, j) {
-    timePays.value[i].kvalues.splice(j, 1)
+    if (confirm('ท่านต้องการลบ รายการที่ ' + (j+1)) == true) { timePays.value[i].kvalues.splice(j, 1); }  
   }
   function calK(Do, Dt, K, is) {
     var txt = [];
@@ -161,14 +153,15 @@ export const usePrjStore = defineStore('prj', () => {
 }
   function calKitem(st, ft, pt, kv,pi, ki){
     var txt = [];
-    console.log('come here');
+    // console.log('come here');
     var K = timePays.value[pi].kvalues[ki].kindex;
     var m = timePays.value[pi].kvalues[ki].money ? timePays.value[pi].kvalues[ki].money : 0;
     var isInTime = timePays.value[pi].isInTime;
     var kc = "";
     // console.log('isInTime=' + isInTime);
-    console.log('K=' + K);
+    // console.log('K=' + K);
     if (K === null) { return; }
+    txt.push('');
     txt.push(`\tรายการที่${ki + 1}  ${K.replace(/_/g, ".")}  ${kFom.value[K][2]}`);
     txt.push(`\tสูตรคำนวน ${kFom.value[K][3]}`);
     if (isInTime) {
@@ -222,35 +215,35 @@ export const usePrjStore = defineStore('prj', () => {
       mReNum = (+kc - 1.04) * m;
       mReturn = (mReNum / 100).toLocaleString("th-TH", { maximumFractionDigits: "4", minimumFractionDigits: "4", });
       // txt.push( `\t\tในงวดนี้ ได้รับเงินชดเชย เท่ากับ ${(+kc - 1.04).toFixed(3)} x ${( m / 100 ).toLocaleString("th-TH", { maximumFractionDigits: "4", minimumFractionDigits: "4", })} = ${mReturn} บาท` );
-      msg.push(`ค่า K = ${kc} เพิ่มขึ้นมากกว่า 4%(1.040) ได้รับเงินชดเชย เท่ากับ ${kc} - 1.04 = ${(kreturn)}`);
-      msg.push(`จำนวนเงินส่งงวด รายการนี้ = ${(m / 100).toLocaleString("th-TH", { maximumFractionDigits: "2", minimumFractionDigits: "2" })} บาท`);
-      msg.push(`ได้รับเงินชดเชย = ${kreturn} x ${(m / 100).toLocaleString("th-TH", { maximumFractionDigits: "2", minimumFractionDigits: "2", })} = ${mReturn} บาท`);
+      msg.push(`\t\tค่า K = ${kc} เพิ่มขึ้นมากกว่า 4%(1.040) ได้รับเงินชดเชย เท่ากับ ${kc} - 1.04 = ${(kreturn)}`);
+      msg.push(`\t\tจำนวนเงินส่งงวด รายการนี้ = ${(m / 100).toLocaleString("th-TH", { maximumFractionDigits: "2", minimumFractionDigits: "2" })} บาท`);
+      msg.push(`\t\tได้รับเงินชดเชย = ${kreturn} x ${(m / 100).toLocaleString("th-TH", { maximumFractionDigits: "2", minimumFractionDigits: "2", })} = ${mReturn} บาท`);
     } else if (kcInt <= 1040 && kcInt > 1000) {
       // txt.push(`\t\tค่า K = ${kc} เพิ่มขึ้นไม่เกิน 4%(1.040) ไม่ได้รับเงินชดเชย`);
       kreturn = ``;
       mReNum = 0;
       mReturn = '0.00';
-      msg.push(`ค่า K = ${kc} เพิ่มขึ้นไม่มากกว่า 4%(1.040) ไม่ได้รับเงินชดเชย`);
-      msg.push(`จำนวนเงินส่งงวด รายการนี้ = ${(m / 100).toLocaleString("th-TH", { maximumFractionDigits: "2", minimumFractionDigits: "2" })} บาท`);
-      msg.push(`ได้รับเงินชดเชย = ${mReturn} บาท`);
+      msg.push(`\t\tค่า K = ${kc} เพิ่มขึ้นไม่มากกว่า 4%(1.040) ไม่ได้รับเงินชดเชย`);
+      msg.push(`\t\tจำนวนเงินส่งงวด รายการนี้ = ${(m / 100).toLocaleString("th-TH", { maximumFractionDigits: "2", minimumFractionDigits: "2" })} บาท`);
+      msg.push(`\t\tได้รับเงินชดเชย = ${mReturn} บาท`);
       // msg.push(``);
     } else if (kcInt === 1000) {
       kreturn = ``;
       // txt.push(`\t\tค่า K = ${kc} ไม่เปลี่ยนแปลง ไม่ได้รับเงินชดเชย`);
       mReNum = 0;
       mReturn = '0.00';
-      msg.push(`ค่า K = ${kc} ไม่เปลี่ยนแปลง ไม่ได้รับเงินชดเชย`);
-      msg.push(`จำนวนเงินส่งงวด รายการนี้ = ${(m / 100).toLocaleString("th-TH", { maximumFractionDigits: "2", minimumFractionDigits: "2" })} บาท`);
+      msg.push(`\t\tค่า K = ${kc} ไม่เปลี่ยนแปลง ไม่ได้รับเงินชดเชย`);
+      msg.push(`\t\tจำนวนเงินส่งงวด รายการนี้ = ${(m / 100).toLocaleString("th-TH", { maximumFractionDigits: "2", minimumFractionDigits: "2" })} บาท`);
       // msg.push(``);
       // msg.push(``);
-      msg.push(`ได้รับเงินชดเชย = ${mReturn} บาท`);
+      msg.push(`\t\tได้รับเงินชดเชย = ${mReturn} บาท`);
     } else if (kcInt < 1000 && kcInt >= 960) {
       kreturn = ``;
       // txt.push(`\t\tค่า K ลดลงไม่เกิน 4%(0.960) 4% ไม่ต้องคืนเงินชดเชย`);
       mReNum = 0;
       mReturn = '0.00';
-      msg.push(`ค่า K = ${kc} ลดลงไม่น้อยกว่า 4%(0.960) ไม่ต้องคืนเงินชดเชย`);   
-      msg.push(`ได้รับเงินชดเชย = ${mReturn} บาท`);
+      msg.push(`\t\tค่า K = ${kc} ลดลงไม่น้อยกว่า 4%(0.960) ไม่ต้องคืนเงินชดเชย`);   
+      msg.push(`\t\tได้รับเงินชดเชย = ${mReturn} บาท`);
     } else if (kcInt < 960) {
       kreturn = `${(+kc - 0.960).toFixed(3)}`;
       // txt.push(`\t\tค่า K ลดลงเกิน 4%(0.960) คืนเงินชดเชย เท่ากับ ${kc} - 0.960 = ${kreturn}`);
@@ -258,9 +251,9 @@ export const usePrjStore = defineStore('prj', () => {
       mReNum = (+kc - 0.96) * m;
       mReturn = (mReNum / 100).toLocaleString("th-TH", { maximumFractionDigits: "4", minimumFractionDigits: "4", });
       // txt.push( `\t\tในงวดนี้ คืนเงินชดเชย เท่ากับ ${(0.96 - +kc).toFixed(3)} x ${( m / 100 ).toLocaleString("th-TH", { maximumFractionDigits: "4", minimumFractionDigits: "4", })} = ${mReturn} บาท` );
-      msg.push(`ค่า K = ${kc} ลดลงน้อยกว่า 4%(0.960) คืนเงินชดเชย ${kc} - 0.960 = ${kreturn}`);
-      msg.push(`จำนวนเงินส่งงวด รายการนี้ = ${(m / 100).toLocaleString("th-TH", { maximumFractionDigits: "2", minimumFractionDigits: "2" })}`);
-      msg.push(`ต้องคืนเงินชดเชย = ${(0.96 - +kc).toFixed(3)} x ${(m / 100).toLocaleString("th-TH", { maximumFractionDigits: "4", minimumFractionDigits: "4", })} = ${mReturn} บาท`);
+      msg.push(`\t\tค่า K = ${kc} ลดลงน้อยกว่า 4%(0.960) คืนเงินชดเชย ${kc} - 0.960 = ${kreturn}`);
+      msg.push(`\t\tจำนวนเงินส่งงวด รายการนี้ = ${(m / 100).toLocaleString("th-TH", { maximumFractionDigits: "2", minimumFractionDigits: "2" })}`);
+      msg.push(`\t\tต้องคืนเงินชดเชย = ${(0.96 - +kc).toFixed(3)} x ${(m / 100).toLocaleString("th-TH", { maximumFractionDigits: "4", minimumFractionDigits: "4", })} = ${mReturn} บาท`);
     }
     txt.push("");
     timePays.value[pi].kvalues[ki].kreturn = kreturn;
