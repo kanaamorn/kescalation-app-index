@@ -1,6 +1,6 @@
 <template>
-    <div class="text-sm">
-        <table class="w-full border border-collapse border-slate-400">
+    <div class="overflow-x-auto text-sm">
+        <table id="forExel" class="w-full text-sm border border-collapse border-slate-400">
             <caption class="caption-top">
                 ตารางสรุปผลคำนวน ค่า K
             </caption>
@@ -11,7 +11,7 @@
                 <th class="border border-slate-300">เงินชดเชย</th>
             </thead>
             <tbody>
-                <tr v-for="tr in tblSum" :key="tr[0]">
+                <tr v-for="tr in tblSum()" :key="tr[0]">
                     <td class="py-1 border border-slate-300" v-for="td in tr" :key="td" v-html="td"></td>
                 </tr>
             </tbody>
@@ -31,16 +31,19 @@
 var prj = usePrjStore();
 var { timeSummit, timeFinish, timePays: timePay, timePaysArr, kValue, prjStr } = storeToRefs(prj);
 import { k_fom, k_name as kName, k_select as kSelect, thaiDate, month } from '~/assets/js/kvar.js';
-var tblSum = ref(null);
+// var tblSum = ref(null);
 var sum = ref(null);
-var calTbl = computed(() => {
-    var xx = isCal.value;
+function tblSum() {
+    // var xx = isCal.value;
+    console.log('tblSum');
     var tblArr = [];
     var sumMreturn = [];
     var ai = 0;
     var tbl = timePay.value;
     tbl.forEach((val, index) => {
-        if (val.time === null) {
+        console.log(index);
+        // console.log(val.kvalues[index]);
+        if (val.time === null ) {
             return
         } else {
             tblArr[ai] = [];
@@ -74,14 +77,10 @@ var calTbl = computed(() => {
         mmm += +xx;
     })
     sum.value = mmm.toLocaleString("th-TH", { maximumFractionDigits: "4", minimumFractionDigits: "4", }) + ' บาท'
-    tblSum.value = tblArr;
-});
-var isCal = ref(false);
-watch(timePay, (tp) => {
-    isCal.value = !isCal.value;
-    (calTbl.value);
-    // console.log('from watch = '+ tp);
-}, { deep: true })
+    // tblSum.value = tblArr;
+    return tblArr;
+};
+
 
 </script>
 
@@ -97,5 +96,8 @@ tbody tr td:nth-last-child(3) {
 }
 tbody tr:last-child td {
     border-bottom: 1px solid black ;
+}
+td, th {
+    white-space: nowrap;
 }
 </style>

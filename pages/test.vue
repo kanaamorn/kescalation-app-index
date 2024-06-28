@@ -2,12 +2,12 @@
     <br><br>
 
     <div class="relative">
-        <UCard :ui="{ base: '', ring: 'ring-blue-200 dark:ring-blue-800', height: 'h-auto' }" class="mx-2">
+        <UCard :ui="{ base: '', ring: 'ring-blue-200 dark:ring-blue-800', height: 'h-auto' }" class="relative mx-2">
             <div class="absolute top-0 right-0">
                 <button
-                    class="p-1 text-sm text-blue-600 border border-blue-600 rounded hover:bg-blue-600 hover:text-white hover:cursor-pointer"
+                    class="p-1 text-xs text-blue-600 border border-blue-600 rounded hover:bg-blue-600 hover:text-white hover:cursor-pointer"
                     title="คำนวนใหม่" @click="refresh">
-                    <Icon name="ep:refresh" /> Refresh
+                    <Icon name="ep:refresh" />Recal
                 </button>
             </div>
             <br>
@@ -40,9 +40,8 @@
     </div>
     <br><br>
     <br><br>
-    <div>
+    <div v-if="timePay[0].time !== null && timePay[0].kvalues[0].kindex !== null">
         <TableSummary />
-        <!-- <UTable :rows="tblSum" :columns="columns" /> -->
     </div>
     <br><br>
     <UCard :ui="{ base: 'overflow-x-auto', ring: 'ring-violet-200 dark:ring-violet-800' }" class="mx-2">
@@ -108,62 +107,7 @@ async function refresh() {
     recal.value = true;
 
 }
-// const columns = [{
-//   key: 'รายการ',
-//   label: 'รายการ'
-// },{
-//   key: 'คำนวน K',
-//   label: 'คำนวน K'
-// }, {
-//   key: 'เงินส่งงวด',
-//   label: 'เงินส่งงวด'
-  
-// }, {
-//   key: 'เงินชดเชย',
-//   label: 'เงินชดเชย'
-// }]
-// var tblSum = ref([]);
-// var calTbl = computed(() => {
-//     var xx = isCal.value;
-//     var tblArr = [];
-//     var ai = 0;
-//     var tbl = timePay.value;
-//     tbl.forEach((val, index) => {
-//         if (val.time === null) {
-//             return
-//         } else {
-//             tblArr[ai] = {};
-//             tblArr[ai]['รายการ'] = `งวดที่ ${index + 1}` + ` วันที่ ${new Date(val.time).getDate()} ${month[new Date(val.time).getMonth()]} ${new Date(val.time).getFullYear() + 543}`;
-//             tblArr[ai]['คำนวน K'] = ``;
-//             tblArr[ai]['เงินส่งงวด'] = ``;
-//             tblArr[ai]['เงินชดเชย'] = ``;
-//         }
 
-//         ai++;
-
-//         val.kvalues.forEach((k, i) => {
-//             if (k.kindex === null) {
-//                 return;
-//             } else {
-//                 tblArr[ai] = {};
-//                 tblArr[ai]['รายการ'] = `รายการที่ ${i + 1}` + ` ${kSelect()[k.kindex][0]} ${kSelect()[k.kindex][1]}`;
-//                 tblArr[ai]['คำนวน K'] = `${k.kval}`;
-//                 tblArr[ai]['เงินส่งงวด'] = (k.money / 100).toLocaleString("th-TH", { maximumFractionDigits: "2", minimumFractionDigits: "2" }) + ' บาท';
-//                 tblArr[ai]['เงินชดเชย'] = `${k.mreturn} บาท`;
-//             }
-
-//             ai++;
-//         })
-//     })
-//     console.log('tblSum = ' + JSON.stringify(tblArr));
-//     tblSum.value = tblArr;
-// })
-// var isCal = ref(false);
-// watch(timePay, (tp) => {
-//     isCal.value = !isCal.value;
-//     (calTbl.value);
-//     // console.log('from watch = '+ tp);
-// }, { deep: true })
 
 onMounted(() => {
 

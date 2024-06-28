@@ -66,7 +66,6 @@ var target = ref(null);
 // var isTable = ref(false);
 onClickOutside(target, () => {
     isPad.value = false;
-    console.log('target' + isPad.value);
 });
 function call() {
 
@@ -74,10 +73,10 @@ function call() {
     let v = vo.replace(/,/g, '');
     let mv = parseInt(+v * 100);
     addMoney(mv, props.payIndex, props.kIndex);
-    // console.log("i call =" + mv);
+    
 }
 function addMoney(mv, pi, ki) {
-    console.log(timePay.value[pi]);
+    // console.log(timePay.value[pi]);
     timePay.value[pi].kvalues[ki].money = mv;
     calKmoney(mv, pi, ki)
 }
@@ -145,19 +144,19 @@ function calKmoney(mv, pi, ki) {
 
     timePay.value[pi].kvalues[ki].msg = msg;
     timePay.value[pi].kvalues[ki].str.forEach((va) => {
-        console.log(va);
+        // console.log(va);
     })
-    msg.forEach((va) => {
-        console.log(va);
-    })
-    console.log('call money' + msg);
+    // msg.forEach((va) => {
+    //     console.log(va);
+    // })
+    // console.log('call money' + msg);
 }
 function openPad() {
     isPad.value = true;
 }
 function closePad () {
     isPad.value = false;
-    console.log(isPad.value);
+    // console.log(isPad.value);
 }
 function addNum(e) {
     let vo = value.value

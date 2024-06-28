@@ -262,9 +262,9 @@ export const usePrjStore = defineStore('prj', () => {
     timePays.value[pi].kvalues[ki].mreturn = mReturn;
   
   
-    txt.forEach((va) => {
-      console.log(va);
-    })
+    // txt.forEach((va) => {
+    //   console.log(va);
+    // })
   }
   onMounted(() => {
 

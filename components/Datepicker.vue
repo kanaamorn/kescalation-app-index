@@ -184,7 +184,7 @@ function selectDate(t,pi) {
                 if (kv === null || pt === null) {
                     continue;
                 }
-                console.log('befor call calKitem' );
+                // console.log('befor call calKitem' );
                 prj.calKitem(st, ft, pt, kv, pi, ki);
                 // console.log('kval' + timePay.value[pi].kvalues[ki].kval + 'pi time=' + new Date(pt) + 'time=' + new Date() );
 
@@ -196,7 +196,7 @@ function selectDate(t,pi) {
     // console.log('before st2');
     // console.log('before st2');
     if ((name.value === "วันเสนอราคา" || name.value === "วันสิ้นสุดสัญญา") && timePay.value[0].time !== null && timeSummit.value !== null && timeFinish.value !== null) {
-        console.log('st2');
+        // console.log('st2');
         for (let pi = 0; pi < timePay.value.length; pi++) {
             console.log('loop pi');
             if (timePay.value[pi].time === null) {
@@ -204,7 +204,7 @@ function selectDate(t,pi) {
             }
             calPayStr(pi);
             for (let ki = 0; ki < timePay.value[pi].kvalues.length; ki++) {
-                console.log('loop ki');
+                // console.log('loop ki');
                 var st = timeSummit.value;
                 var ft = timeFinish.value;
                 var pt = timePay.value[pi].time;
@@ -213,7 +213,7 @@ function selectDate(t,pi) {
                     continue;
                 }
                 prj.calKitem(st, ft, pt, kv, pi, ki);
-                console.log('loop ki' + timePay.value[pi].kvalues[ki].kval);
+                // console.log('loop ki' + timePay.value[pi].kvalues[ki].kval);
 
             }
 
@@ -232,9 +232,9 @@ function calPrjStr() {
         str.push(`วันเสนอราคา    ${thaiDate(st)[3]}`);
         str.push(`วันสิ้นสุดสัญญา  ${thaiDate(ft)[3]}`);
         prjStr.value = str;
-        str.forEach((v) => {
-            console.log(v);
-        });
+        // str.forEach((v) => {
+        //     console.log(v);
+        // });
     }
 }
 
@@ -270,11 +270,11 @@ var calPayStr = (pi) => {
     }
     timePay.value[pi].str = txt;
     timePay.value[pi].isInTime = isInTime;
-    console.log('isInTime = ' + isInTime);
-    txt.forEach((va) => {
-        console.log(va);
+    // console.log('isInTime = ' + isInTime);
+    // txt.forEach((va) => {
+    //     console.log(va);
 
-    })
+    // })
     // console.log(JSON.stringify(timePay.value));
 }
 class DatePic {
