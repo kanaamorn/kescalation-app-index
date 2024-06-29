@@ -38,9 +38,9 @@
             </div>
         </Ucard>
     </div>
-    <br><br>
-    <br><br>
-    <div v-if="timePay[0].time !== null && timePay[0].kvalues[0].kindex !== null">
+    <br>
+    
+    <div class="" v-if="timePay[0].time !== null && timePay[0].kvalues[0].kindex !== null">
         <TableSummary />
     </div>
     <br><br>
@@ -56,7 +56,7 @@
                 &nbsp;&nbsp;&nbsp;
                 <button
                     class=" p-[2px] text-sm border rounded border-violet-600 text-violet-600 hover:bg-violet-600 hover:text-white hover:cursor-pointer"
-                    @click="copy(source)">
+                    @click="createStr ()">
                     <Icon name="ion:copy-outline" /> copy
                 </button>
 
@@ -96,7 +96,26 @@ var month = ["มกราคม", "กุมภาพันธ์", "มีน�
 var kMonth = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
 var kFom = reactive(k_fom);
 
-var isPrjStr = ref(false);
+function createStr () {
+    var pst1 = '\t\t\tรายการคำนวน\n' 
+    pst1 += prjStr.value.join('\n' );
+    console.log(pst1);
+    var str1 = '';
+    for (let i = 0; i < timePay.value.length; i++) {
+        str1 += timePay.value[i].str.join('\n');
+        str1 += '\n';
+        for (let j = 0; j < timePay.value[i].kvalues.length; j++) {
+            str1 += timePay.value[i].kvalues[j].str.join('\n');
+            str1 += '\n';
+            str1 += timePay.value[i].kvalues[j].msg.join('\n');
+            str1 += '\n';
+        } 
+        
+    }
+    console.log(str1);
+    source.value = pst1 + '\n' + str1;
+    copy(source.value);
+}
 
 async function refresh() {
     prj.refreshPrj();

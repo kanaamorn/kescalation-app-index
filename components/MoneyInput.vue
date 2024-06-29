@@ -115,21 +115,21 @@ function calKmoney(mv, pi, ki) {
         mReturn = '0.00';
         msg.push(`\t\tค่า K = ${kval} เพิ่มขึ้นไม่มากกว่า 4% ไม่ได้รับเงินชดเชย`);
         msg.push(`\t\tจำนวนเงินส่งงวด รายการนี้ = ${(mv / 100).toLocaleString("th-TH", { maximumFractionDigits: "2", minimumFractionDigits: "2" })} บาท`);
-        msg.push(`\t\tได้รับเงินชดเชย = ${mReturn}`);
+        msg.push(`\t\tได้รับเงินชดเชย = ${mReturn} บาท`);
     } else if (kcInt === 1000) {
         // msg.push(`\t\tค่า K ไม่เปลี่ยนแปลง ไม่ได้รับเงินชดเชย`);
         // mReNum = 0;
         mReturn = '0.00';
         msg.push(`\t\tค่า K = ${kval} ไม่เปลี่ยนแปลง ไม่ได้รับเงินชดเชย`);
         msg.push(`\t\tจำนวนเงินส่งงวด รายการนี้ = ${(mv / 100).toLocaleString("th-TH", { maximumFractionDigits: "2", minimumFractionDigits: "2" })} บาท`);
-        msg.push(`\t\tได้รับเงินชดเชย = ${mReturn}`);
+        msg.push(`\t\tได้รับเงินชดเชย = ${mReturn} บาท`);
     } else if (kcInt < 1000 && kcInt >= 960) {
         // msg.push(`ค่า K ลดลงไม่เกิน 4% ไม่ต้องคืนเงินชดเชย`);
         // mReNum = 0;
         mReturn = '0.00';
         msg.push(`\t\tค่า K = ${kval} ลดลงไม่น้อยกว่า 4% ไม่ต้องคืนเงินชดเชย`);
         msg.push(`\t\tจำนวนเงินส่งงวด รายการนี้ = ${(mv / 100).toLocaleString("th-TH", { maximumFractionDigits: "2", minimumFractionDigits: "2" })} บาท`);
-        msg.push(`\t\tต้องคืนเงินชดเชย = ${(+kreturn).toFixed(3)}`);
+        msg.push(`\t\tต้องคืนเงินชดเชย = ${(+kreturn).toFixed(3)} บาท`);
     } else if (kcInt < 960) {
         // msg.push(`\t\tค่า K ลดลงเกิน 4% ต้องคืนเงินชดเชย เท่ากับ 0.960 - ${kval} = ${(+kval - 0.960).toFixed(3)}`);
         // txt.push(`\t\tจำนวนเงินส่งงวด รายการนี้เท่ากับ ${(mv / 100).toLocaleString("th-TH", { maximumFractionDigits: "2", minimumFractionDigits: "2" })}`);
